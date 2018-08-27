@@ -9,6 +9,7 @@ out/
 *.class
 *.swp
 .idea
+nohup.out
 
 .project
 .settings
