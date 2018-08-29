@@ -27,7 +27,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     }
 
     /**
-     * 调用方法成功之后处理
+     * 调用方法成功之后处理会在DispatcherServlet 进行视图返回渲染之前被调用
+     * postHandle 方法被调用的方向跟preHandle 是相反的，
+     * 也就是说先声明的Interceptor 的postHandle 方法反而会后执行
      * @param request
      * @param response
      * @param handler
@@ -39,6 +41,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         System.out.println("postHandle");
     }
 
+    /**
+     * 该方法也是需要当前对应的Interceptor的preHandle方法的返回值为true时才会执行。该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行
+     * @param request
+     * @param response
+     * @param handler
+     * @param ex
+     * @throws Exception
+     */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
         System.out.println("afterCompletion");
