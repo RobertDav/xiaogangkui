@@ -22,7 +22,9 @@ public class CompanyController {
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
+        System.out.println("调用company开始");
         List<CompanyDto> companyDtos = companyService.queryAll();
+        System.out.println("调用结束");
         return JSON.toJSONString(companyDtos);
     }
 }
