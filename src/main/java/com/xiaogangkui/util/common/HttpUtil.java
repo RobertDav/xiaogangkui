@@ -52,6 +52,19 @@ public class HttpUtil implements InitializingBean {
         return excute(request);
     }
 
+
+    public String postJsonByHeader(String url,Object object,Map<String,String> header){
+        RequestBody requestBody = RequestBody.create(JSON_TYPE, JSON.toJSONString(object));
+        Set<String> set = header.keySet();
+
+        Request.Builder request = new Request.Builder().url(url).post(requestBody);
+        for (String s : set) {
+            request.addHeader(s,header.get(s));
+        }
+        return excute(request.build());
+
+    }
+
     public String excute(Request request){
         try {
             Response execute = okHttpClient.newCall(request).execute();
