@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 /**
+ * 获取request的参数并且把流塞回去
  * @author Created by luchunyu
  */
 public class BodyReaderHttpServletRequestWrapper  extends HttpServletRequestWrapper {
