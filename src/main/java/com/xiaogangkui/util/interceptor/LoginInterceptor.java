@@ -1,15 +1,21 @@
 package com.xiaogangkui.util.interceptor;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.xiaogangkui.wrapper.BodyReaderHttpServletRequestWrapper;
+import lombok.extern.log4j.Log4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author Created by luchunyu
  */
+@Log4j
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     /**
@@ -23,6 +29,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandle");
+        String bodyString = new BodyReaderHttpServletRequestWrapper(request).getBodyString(request);
+        Map<String, Object> map = JSON.parseObject(bodyString, new TypeReference<Map<String, Object>>() {
+        });
+        log.info(JSON.toJSON(map));
         return true;
     }
 
