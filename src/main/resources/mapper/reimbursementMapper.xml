@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaogangkui.dao.ReimbursementDao">
+    <insert id="create" parameterType="Reimbursement" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_reimbursement(customerId,applyer,applyRemark,applyTime,status,amount,unPayAmount,createTime,isDeleted,projectId,applyerName,verifyInfo,applyStatus
+        )
+        VALUES(#{customerId},#{applyer},#{applyRemark},#{applyTime},#{status},#{amount},#{unPayAmount},#{createTime},#{isDeleted},#{projectId},#{applyerName},#{verifyInfo},#{applyStatus})
+    </insert>
+    <select id="findById" parameterType="map" resultType="Reimbursement">
+        SELECT * from t_reimbursement where id = #{id}
+    </select>
+    <update id="updateStatus" parameterType="map">
+        UPDATE  t_reimbursement set applyStatus = #{applyStatus} where id = #{id}
+    </update>
+    <select id="fuzzySearch" parameterType="map" resultType="Reimbursement">
+        SELECT * from t_reimbursement
+        where 0=0
+        <if test="customerId !=0">
+            and customerId = #{customerId}
+        </if>
+        <if test="applyStatus != null">
+            and applyStaus = #{applyStatus}
+        </if>
+        <if test="applyer !=0">
+            applyer = #{applyer}
+        </if>
+    </select>
+</mapper>

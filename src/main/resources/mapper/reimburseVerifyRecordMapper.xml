@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaogangkui.dao.ReimburseVerifyRecordDao">
+    <insert id="create" parameterType="ReimburseVerifyRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ts_reimburese_verify_record(actorId,actorName,status ,createTime ,isDeleted ,remark,reimburseId)
+        VALUES(#{actorId},#{actorName},#{status} ,#{createTime},#{isDeleted},#{remark},#{reimburseId})
+    </insert>
+    <select id="findById" parameterType="map" resultType="ReimburseVerifyRecord">
+        SELECT * from ts_reimburese_verify_record where id = #{id}
+    </select>
+
+</mapper>

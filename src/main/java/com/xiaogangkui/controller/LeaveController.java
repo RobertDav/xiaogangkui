@@ -1,6 +1,5 @@
 package com.xiaogangkui.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.xiaogangkui.dto.FuzzySearchDto;
 import com.xiaogangkui.dto.LeaveRecordDto;
 import com.xiaogangkui.dto.LeaveVerifyRecordDto;
@@ -26,40 +25,42 @@ public class LeaveController {
     @Autowired
     private LeaveService leaveService;
 
-    @RequestMapping(value = "/searchList",method = RequestMethod.POST)
-    public ResultMap searchList(@RequestBody FuzzySearchDto fuzzySearchDto){
+    @RequestMapping(value = "/searchList", method = RequestMethod.POST)
+    public ResultMap searchList(@RequestBody FuzzySearchDto fuzzySearchDto) {
         List<LeaveRecordDto> leaveRecordDtos = leaveService.fuzzySearch(fuzzySearchDto);
-        return ResultMap.generate(SUCCESS_CODE,"",leaveRecordDtos);
+        return ResultMap.generate(SUCCESS_CODE, "", leaveRecordDtos);
     }
 
-    @RequestMapping(value = "/loadById",method = RequestMethod.POST)
-    public ResultMap loadById(@RequestBody FuzzySearchDto fuzzySearchDto){
+    @RequestMapping(value = "/loadById", method = RequestMethod.POST)
+    public ResultMap loadById(@RequestBody FuzzySearchDto fuzzySearchDto) {
         LeaveRecordDto recordDto = leaveService.findById(fuzzySearchDto.getId());
-        return ResultMap.generate(SUCCESS_CODE,"",recordDto);
+        return ResultMap.generate(SUCCESS_CODE, "", recordDto);
     }
 
-    @RequestMapping(value = "/updateStatus",method = RequestMethod.POST)
-    public ResultMap updateStatus(@RequestBody LeaveRecordDto recordDto){
-        leaveService.updateStatus(recordDto.getId(),recordDto.getStatus());
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    public ResultMap updateStatus(@RequestBody LeaveRecordDto recordDto) {
+        leaveService.updateStatus(recordDto.getId(), recordDto.getStatus());
         return ResultMap.generate(SUCCESS_CODE);
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public ResultMap save(@RequestBody LeaveRecordDto leaveRecordDto){
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResultMap save(@RequestBody LeaveRecordDto leaveRecordDto) {
         leaveService.save(leaveRecordDto);
         return ResultMap.generate(SUCCESS_CODE);
     }
 
-    @RequestMapping(value = "/verifyLeave",method = RequestMethod.POST)
-    public ResultMap verifyLeave(@RequestBody LeaveVerifyRecordDto recordDto){
+    @RequestMapping(value = "/verifyLeave", method = RequestMethod.POST)
+    public ResultMap verifyLeave(@RequestBody LeaveVerifyRecordDto recordDto) {
         leaveService.verifyLeave(recordDto);
         return ResultMap.generate(SUCCESS_CODE);
     }
 
-    @RequestMapping(value = "/queryVerifyList",method = RequestMethod.POST)
-    public ResultMap queryVerifyList(@RequestBody FuzzySearchDto fuzzySearchDto){
-
-        return ResultMap.generate(SUCCESS_CODE);
+    @RequestMapping(value = "/queryVerifyList", method = RequestMethod.POST)
+    public ResultMap queryVerifyList(@RequestBody FuzzySearchDto fuzzySearchDto) {
+        List<LeaveRecordDto> leaveRecordDtos = leaveService.queryVerifyList(fuzzySearchDto);
+        return ResultMap.generate(SUCCESS_CODE,"",leaveRecordDtos);
     }
+
+    
 
 }

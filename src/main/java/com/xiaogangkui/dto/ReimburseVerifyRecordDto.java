@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author Created by luchunyu
  */
@@ -12,11 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuzzySearchDto {
+public class ReimburseVerifyRecordDto {
     private int id;
+    private int actorId;
+    private String actorName;
     private int status;
-    private int applyerId;
-    private int applyer;
-    private int customerId;
-    private int applyStatus;
+    private Date createTime;
+    private int isDeleted;
+    private String remark;
+    private int reimburseId;
 }

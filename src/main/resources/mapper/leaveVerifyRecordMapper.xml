@@ -5,8 +5,7 @@
         INSERT INTO ts_leave_verify_record(leaveId,actorId,actorName,status,remark ,isDeleted ,createTime)
         VALUES(#{leaveId},#{actorId},#{actorName},#{status},#{remark} ,#{isDeleted} ,#{createTime})
     </insert>
-    <select id="findById" parameterType="map" resultType="LeaveRecord">
+    <select id="findById" parameterType="map" resultType="LeaveVerifyRecord">
         SELECT * from ts_leave_verify_record where id = #{id}
     </select>
-
 </mapper>
