@@ -8,4 +8,7 @@
     <select id="findById" parameterType="map" resultType="LeaveVerifyRecord">
         SELECT * from ts_leave_verify_record where id = #{id}
     </select>
+    <select id="queryByParentId" parameterType="map" resultType="LeaveVerifyRecord">
+        SELECT * from ts_leave_verify_record where leaveId = #{parentId}
+    </select>
 </mapper>

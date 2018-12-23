@@ -31,6 +31,8 @@ public class ReimbursementDto {
     private int id;
     private Date createTime;
 
+    private List<ReimburseVerifyRecordDto> verifyRecordDtos;
+
     private List<VerifyInfo> verifyInfoList;
 
     @Data

@@ -58,9 +58,9 @@ public class LeaveServiceImpl implements LeaveService {
         if(!StringUtils.isEmpty(leaveRecordDto.getVerifyInfo())){
             leaveRecordDto.setVerifyInfos(JSON.parseArray(leaveRecordDto.getVerifyInfo(), LeaveRecordDto.VerifyInfo.class));
         }
+        List<LeaveVerifyRecord> leaveVerifyRecords = verifyRecordDao.queryByParentId(id);
+        leaveRecordDto.setLeaveVerifyRecordDtos(beanMapperUtil.batchMapper(leaveVerifyRecords,LeaveVerifyRecordDto.class));
         return leaveRecordDto;
-
-
     }
 
     @Override

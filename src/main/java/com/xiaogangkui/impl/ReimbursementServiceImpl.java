@@ -46,6 +46,9 @@ public class ReimbursementServiceImpl implements ReimbursementService {
         if(!StringUtils.isEmpty(reimbursement.getVerifyInfo())){
             reimbursementDto.setVerifyInfoList(JSON.parseArray(reimbursementDto.getVerifyInfo(), ReimbursementDto.VerifyInfo.class));
         }
+        List<ReimburseVerifyRecord> reimburseVerifyRecords = reimburseVerifyRecordDao.queryByParentId(id);
+        List<ReimburseVerifyRecordDto> reimburseVerifyRecordDtos = beanMapperUtil.batchMapper(reimburseVerifyRecords, ReimburseVerifyRecordDto.class);
+        reimbursementDto.setVerifyRecordDtos(reimburseVerifyRecordDtos);
         return reimbursementDto;
     }
 

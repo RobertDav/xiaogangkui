@@ -29,6 +29,7 @@ public class LeaveRecordDto implements Serializable{
     private int status;
     private Date createTime;
     private int customerId;
+    private List<LeaveVerifyRecordDto> leaveVerifyRecordDtos;
 
     private List<LeaveRecordDto.VerifyInfo> verifyInfos;
 
