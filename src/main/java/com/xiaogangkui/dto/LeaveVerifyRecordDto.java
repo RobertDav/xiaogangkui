@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LeaveVerifyRecordDto {
+public class LeaveVerifyRecordDto implements Serializable {
     private int  leaveId ;
     private int actorId;
     private String actorName;

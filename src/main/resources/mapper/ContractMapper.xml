@@ -13,5 +13,15 @@
     <select id="findById" parameterType="map" resultType="com.xiaogangkui.dto.ContractDto">
         SELECT * from t_contract where id = #{id}
     </select>
-
+    <select id="queryApproveList" parameterType="map" resultType="com.xiaogangkui.dto.ContractApproveDto">
+        SELECT * from ts_contract_approve
+        where contactId = #{contactId}
+    </select>
+    <insert id="saveApprove" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT  into ts_contract_approve(customerId,contactId,contractName,approveId,approveName,status,createTime, isDeleted,remark)
+        VALUES (#{customerId},#{contactId},#{contractName},#{approveId},#{approveName},#{status},#{createTime},#{isDeleted},#{remark})
+    </insert>
+    <update id="updateStatus" parameterType="map">
+        UPDATE t_contract set status = #{status} where id = #{id}
+    </update>
 </mapper>

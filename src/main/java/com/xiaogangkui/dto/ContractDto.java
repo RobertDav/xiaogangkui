@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractDto {
+public class ContractDto implements Serializable {
     private Integer id;
     private Integer customerId;
     private String name;
@@ -47,7 +48,7 @@ public class ContractDto {
     private String applyers;
     private String typeDesc;
     private String statusDesc;
-
+    private List<ContractApproveDto> approveDtos;
     private int forceCollectStatus;
     private String forceCollectStatusDesc;
 

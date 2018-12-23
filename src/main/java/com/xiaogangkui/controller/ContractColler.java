@@ -2,6 +2,7 @@ package com.xiaogangkui.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.xiaogangkui.dao.ContractDao;
+import com.xiaogangkui.dto.ContractApproveDto;
 import com.xiaogangkui.dto.ContractDto;
 import com.xiaogangkui.dto.FuzzySearchDto;
 import com.xiaogangkui.dto.ResultMap;
@@ -46,5 +47,22 @@ public class ContractColler {
         }
         return ResultMap.generate(SUCCESS_CODE,"",null);
 
+    }
+
+    @RequestMapping(value = "/findById",method = RequestMethod.POST)
+    public ResultMap findById(@RequestBody FuzzySearchDto fuzzySearchDto){
+        ContractDto contractDto = contractDao.findById(fuzzySearchDto.getId());
+        List<ContractApproveDto> contractApproveDtos = contractDao.queryApproveList(fuzzySearchDto.getId());
+        if(CollectionUtils.isNotEmpty(contractApproveDtos)){
+            contractDto.setApproveDtos(contractApproveDtos);
+        }
+        return ResultMap.generate(SUCCESS_CODE,"",contractDto);
+    }
+
+    @RequestMapping(value = "/saveApprove",method = RequestMethod.POST)
+    public ResultMap saveApprove(@RequestBody ContractApproveDto approveDto){
+        contractDao.saveApprove(approveDto);
+        contractDao.updateStatus(approveDto.getContactId(),approveDto.getStatus());
+        return ResultMap.generate(SUCCESS_CODE,"");
     }
 }

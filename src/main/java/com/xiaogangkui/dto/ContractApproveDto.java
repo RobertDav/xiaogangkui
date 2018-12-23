@@ -15,13 +15,15 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReimburseVerifyRecordDto implements Serializable {
+public class ContractApproveDto implements Serializable{
     private int id;
-    private int actorId;
-    private String actorName;
+    private int customerId;
+    private int contactId;
+    private int contractName;
+    private int approveId;
+    private String approveName;
     private int status;
     private Date createTime;
     private int isDeleted;
     private String remark;
-    private int reimburseId;
 }
