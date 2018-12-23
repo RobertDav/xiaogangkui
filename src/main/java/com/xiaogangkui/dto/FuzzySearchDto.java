@@ -24,4 +24,6 @@ public class FuzzySearchDto {
     private int userId;
     private Date startTime;
     private Date endTime;
+    private int start;
+    private int end;
 }
