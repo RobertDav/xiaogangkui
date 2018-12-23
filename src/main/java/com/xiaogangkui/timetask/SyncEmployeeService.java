@@ -11,6 +11,6 @@ public class SyncEmployeeService {
 
     @Scheduled(cron = "0 0/1 * * * ?")
     public void testTaskTime() {
-        System.out.println("当前时间" + System.currentTimeMillis());
+//        System.out.println("当前时间" + System.currentTimeMillis());
     }
 }

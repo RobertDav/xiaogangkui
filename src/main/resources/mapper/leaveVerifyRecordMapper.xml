@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaogangkui.dao.LeaveVerifyRecordDao">
+    <insert id="create" parameterType="LeaveVerifyRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ts_leave_verify_record(leaveId,actorId,actorName,status,remark ,isDeleted ,createTime)
+        VALUES(#{leaveId},#{actorId},#{actorName},#{status},#{remark} ,#{isDeleted} ,#{createTime})
+    </insert>
+    <select id="findById" parameterType="map" resultType="LeaveRecord">
+        SELECT * from ts_leave_verify_record where id = #{id}
+    </select>
+
+</mapper>

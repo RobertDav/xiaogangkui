@@ -9,7 +9,6 @@ public class BaseEntity {
 
     private int id;
     private Date  createTime;
-    private Date updateTime;
     private int isDeleted;
 
     public int getId() {
@@ -28,13 +27,6 @@ public class BaseEntity {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     public int getIsDeleted() {
         return isDeleted;
