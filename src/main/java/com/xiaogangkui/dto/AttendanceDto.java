@@ -14,14 +14,11 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuzzySearchDto {
-    private int id;
-    private int status;
-    private int applyerId;
-    private int applyer;
+public class AttendanceDto {
     private int customerId;
-    private int applyStatus;
+    private String userName;
     private int userId;
-    private Date startTime;
-    private Date endTime;
+    private int id;
+    private int type;
+    private Date createTime;
 }
