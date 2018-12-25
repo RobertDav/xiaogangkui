@@ -8,13 +8,13 @@
     <select id="fuzzySearch" parameterType="map" resultType="LeaveRecord">
         select * from t_leave_record
         where 0=0
-        <if test="applyerId != 0">
+        <if test="applyerId ！= null and applyerId != 0">
             and applyerId = #{applyerId}
         </if>
         <if test="status != null">
             and status =#{status}
         </if>
-        <if test="customerId != 0">
+        <if test="customerId != null and customerId != 0">
             and customerId = #{customerId}
         </if>
     </select>

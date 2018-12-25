@@ -11,7 +11,7 @@
     <select id="fuzzySearch" parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where
         0=0
-        <if test="userId !=0">
+        <if test="userId != null and userId !=0">
             and userId = #{userId}
         </if>
         <if test="startTime != '' and startTime != null">
