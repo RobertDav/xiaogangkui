@@ -23,7 +23,7 @@ import static com.xiaogangkui.dto.ResultMap.SUCCESS_CODE;
 /**
  * @author Created by luchunyu
  */
-@RequestMapping(value = "contract")
+@RequestMapping(value = "/contract")
 @RestController
 public class ContractColler {
     @Autowired
