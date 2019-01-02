@@ -8,17 +8,17 @@
     <select id="findById" parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where id = #{id}
     </select>
-    <select id="fuzzySearch" parameterType="map" resultType="Attendance">
+    <select id="fuzzySearch"  parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where
         0=0
         <if test="userId != null and userId !=0">
             and userId = #{userId}
         </if>
-        <if test="startTime != '' and startTime != null">
-            and createTime >=#{statrtTime}
+        <if test="startTime != null">
+            and createTime >= #{startTime}
         </if>
-        <if test="endTime !='' and endTime != null">
-            and #{endTime}>=createTime
+        <if test="endTime != null">
+            and #{endTime} >= createTime
         </if>
     </select>
 </mapper>
