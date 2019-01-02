@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * @author Created by luchunyu
  */
-@Mapper
 public interface ContractDao {
 
     List<ContractDto> queryList(FuzzySearchDto fuzzySearchDto);

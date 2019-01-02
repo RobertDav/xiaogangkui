@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author Created by luchunyu
  */
-@Mapper
 public interface AttendanceDao {
 
     void create(Attendance attendance);

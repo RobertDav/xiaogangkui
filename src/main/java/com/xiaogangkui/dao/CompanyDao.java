@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author Created by luchunyu
  */
-@Mapper
 public interface CompanyDao {
 
     List<Company> queryAll();

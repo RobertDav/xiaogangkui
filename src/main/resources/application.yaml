@@ -5,6 +5,7 @@ server:
 mybatis:
   typeAliasesPackage: com.xiaogangkui.entity
   mapperLocations: classpath:mapper/*.xml
+  typeHandlersPackage: com.xiaogangkui.dao
 
 spring:
   datasource:

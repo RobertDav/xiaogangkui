@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Created by luchunyu
  */
-@Mapper
 public interface LeaveVerifyRecordDao {
 
     void create(LeaveVerifyRecord leaveVerifyRecord);

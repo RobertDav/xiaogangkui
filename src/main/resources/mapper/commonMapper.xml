@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaogangkui.dao.CommonDao">
+    <select id="queryAllProject" parameterType="map" resultType="com.xiaogangkui.dto.CommonDto">
+        SELECT id ,name FROM t_project where customerId = #{customerId} and status = 1 and isDeleted = 0;
+    </select>
+    <select id="queryAllUser" parameterType="map" resultType="com.xiaogangkui.dto.CommonDto">
+        SELECT id ,name FROM t_user where customerId = #{customerId} and status = 1 and isDeleted = 0;
+    </select>
+
+    <select id="loadByAccount" resultType="com.xiaogangkui.dto.CommonDto" parameterType="map">
+        SELECT id,name,customerId from t_user WHERE  account = #{account} and password = #{password} and status = 1 and isDeleted = 0
+    </select>
+
+    <select id="loadByUserId" parameterType="map" resultType="com.xiaogangkui.dto.CommonDto">
+        SELECT id,name,password,customerId from t_user WHERE  id = #{id}
+    </select>
+</mapper>
