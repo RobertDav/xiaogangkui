@@ -8,7 +8,7 @@ mybatis:
 
 spring:
   datasource:
-    url: jdbc:mysql://172.19.249.87:3306/cantaloupe?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/obas?useUnicode=true&characterEncoding=utf-8
     username: root
     password: admin123
     driver-class-name: com.mysql.jdbc.Driver
