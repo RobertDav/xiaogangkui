@@ -27,4 +27,10 @@ public class CompanyController {
         System.out.println("调用结束");
         return JSON.toJSONString(companyDtos);
     }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+       return "hello world";
+    }
+
 }
