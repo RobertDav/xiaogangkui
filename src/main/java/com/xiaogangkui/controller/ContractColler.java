@@ -26,8 +26,10 @@ import static com.xiaogangkui.dto.ResultMap.SUCCESS_CODE;
 @RequestMapping(value = "/contract")
 @RestController
 public class ContractColler {
+
     @Autowired
     private ContractDao contractDao;
+
     @RequestMapping(value = "/queryList",method = RequestMethod.POST)
     public ResultMap queryList(@RequestBody FuzzySearchDto fuzzySearchDto){
         List<ContractDto> contractDtos = contractDao.queryList(fuzzySearchDto);
@@ -42,7 +44,7 @@ public class ContractColler {
             }).collect(Collectors.toList());
             Map<String,Object> map = new HashMap<>();
             map.put("total",collect.size());
-            map.put("list",collect.subList(fuzzySearchDto.getStart(),fuzzySearchDto.getEnd()));
+            map.put("list",collect.subList(fuzzySearchDto.getStart(),collect.size() >fuzzySearchDto.getEnd()?fuzzySearchDto.getEnd():collect.size()));
             return ResultMap.generate(SUCCESS_CODE,"",map);
         }
         return ResultMap.generate(SUCCESS_CODE,"",null);

@@ -19,7 +19,7 @@ public class ContractApproveDto implements Serializable{
     private int id;
     private int customerId;
     private int contactId;
-    private int contractName;
+    private String contractName;
     private int approveId;
     private String approveName;
     private int status;

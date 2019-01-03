@@ -6,7 +6,7 @@
         where customerId = #{customerId} and type =2
         and isDeleted = 0
         <if test="status != 0">
-            status = #{status}
+           and  status = #{status}
         </if>
         order by createTime;
     </select>
