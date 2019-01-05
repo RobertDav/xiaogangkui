@@ -19,7 +19,7 @@ public class ContractFoceDto implements Serializable{
     private int id;
     private String reviewIds;
     private int actor;
-    private String status;
+    private int status;
     private Date createTime;
     private Date updateTime;
     private int isDeleted;

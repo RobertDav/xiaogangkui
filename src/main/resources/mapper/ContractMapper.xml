@@ -37,4 +37,8 @@
     <select id="queryForceListById" parameterType="map" resultType="com.xiaogangkui.dto.ContractFoceDto">
         select * from ts_contract_force_record where contactId = #{contactId} and parentId != 0
     </select>
+    <insert id="save" parameterType="map">
+        INSERT INTO ts_contract_force_record(actor,status,createTime,  isDeleted,contactId,customerId,parentId,actorName,remark)
+        VALUES (#{actor},#{status},#{createTime},#{isDeleted}  ,#{contactId},#{customerId},#{parentId},#{actorName},#{remark})
+    </insert>
 </mapper>

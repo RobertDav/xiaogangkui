@@ -7,6 +7,7 @@ import com.xiaogangkui.dto.FuzzySearchDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -29,4 +30,9 @@ public interface ContractDao {
     List<ContractDto> queryForceList(FuzzySearchDto fuzzySearchDto);
 
     List<ContractFoceDto> queryForceListById(@Param("contactId") int contactId);
+
+    void save(ContractFoceDto contractFoceDto);
+
+    @Update("update t_contract set collectStatus = #{collectStatus} where id = #{id}")
+    void updateCollectStatus(@Param("id") int id,@Param("collectStatus") int collectStatus);
 }

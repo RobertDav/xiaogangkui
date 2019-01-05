@@ -31,4 +31,5 @@ public class FuzzySearchDto implements Serializable {
     private String password;
     private String newPassword;
     private int limit;
+    private int collectStatus;
 }
