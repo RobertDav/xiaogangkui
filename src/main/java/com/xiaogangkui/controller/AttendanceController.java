@@ -44,6 +44,7 @@ public class AttendanceController {
 
     @RequestMapping(value = "/queryList",method = RequestMethod.POST)
     public ResultMap queryList(@RequestBody FuzzySearchDto fuzzySearchDto){
+        fuzzySearchDto.setLimit( fuzzySearchDto.getEnd() -fuzzySearchDto.getStart());
         List<AttendanceDto> attendanceDtos = attendanceService.fuzzySearch(fuzzySearchDto);
         int count = attendanceDao.fuzzySearchCount(fuzzySearchDto);
         Map<String,Object> map = new HashMap<>();

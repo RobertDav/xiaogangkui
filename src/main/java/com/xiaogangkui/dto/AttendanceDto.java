@@ -22,4 +22,7 @@ public class AttendanceDto implements Serializable {
     private int id;
     private int type;
     private Date createTime;
+    private String address;
+    private String longitude;
+    private String latitude;
 }

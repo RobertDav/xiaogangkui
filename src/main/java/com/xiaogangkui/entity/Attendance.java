@@ -17,4 +17,7 @@ public class Attendance extends BaseEntity {
     private int userId;
     private String userName;
     private int type;
+    private String address;
+    private String longitude;
+    private String latitude;
 }
