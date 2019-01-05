@@ -92,7 +92,7 @@ public class ContractColler {
         contractDto.setContractFoceDtos(contractFoceDtos);
         return ResultMap.generate(SUCCESS_CODE,"",contractDto);
     }
-    @RequestMapping(value = "/loadForceDetail",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveForce",method = RequestMethod.POST)
     public ResultMap saveForce(@RequestBody ContractFoceDto contractFoceDto){
         contractDao.save(contractFoceDto);
         int collectStatus = 0;
