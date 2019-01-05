@@ -12,10 +12,10 @@
     <select id="fuzzySearch"  parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where
         0=0
-        <if test="userId != null and userId !=0">
+        <if test="userId !=0">
             and userId = #{userId}
         </if>
-        <if test="customerId != null and customerId !=0">
+        <if test="customerId !=0">
             and customerId = #{customerId}
         </if>
         <if test="startTime != null">
@@ -32,10 +32,10 @@
     <select id="fuzzySearchCount" parameterType="map" resultType="java.lang.Integer">
         SELECT COUNT(id) from t_attendance where
         0=0
-        <if test="userId != null and userId !=0">
+        <if test="userId !=0">
             and userId = #{userId}
         </if>
-        <if test="customerId != null and customerId !=0">
+        <if test="customerId !=0">
             and customerId = #{customerId}
         </if>
         <if test="startTime != null">

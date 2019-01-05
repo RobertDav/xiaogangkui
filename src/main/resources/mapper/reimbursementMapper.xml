@@ -15,13 +15,13 @@
     <select id="fuzzySearch" parameterType="map" resultType="Reimbursement">
         SELECT * from t_reimbursement
         where 0=0
-        <if test="customerId != null and customerId !=0">
+        <if test=" customerId !=0">
             and customerId = #{customerId}
         </if>
         <if test="applyStatus != null">
             and applyStaus = #{applyStatus}
         </if>
-        <if test="applyer != null and applyer !=0">
+        <if test="applyer !=0">
             applyer = #{applyer}
         </if>
     </select>
