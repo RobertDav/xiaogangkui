@@ -19,4 +19,6 @@ public interface ReimbursementService {
     void verify(ReimburseVerifyRecordDto reimburseVerifyRecordDto);
 
     List<ReimbursementDto> queryVerifyList(FuzzySearchDto fuzzySearchDto);
+
+    List<ReimbursementDto> queryList(FuzzySearchDto fuzzySearchDto);
 }

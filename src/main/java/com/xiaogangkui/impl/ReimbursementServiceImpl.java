@@ -78,5 +78,12 @@ public class ReimbursementServiceImpl implements ReimbursementService {
         return beanMapperUtil.batchMapper(collect,ReimbursementDto.class);
     }
 
+    @Override
+    public List<ReimbursementDto> queryList(FuzzySearchDto fuzzySearchDto) {
+        List<Reimbursement> reimbursements = reimbursementDao.fuzzySearch(fuzzySearchDto);
+        if(CollectionUtils.isEmpty(reimbursements)) return null;
+        return beanMapperUtil.batchMapper(reimbursements,ReimbursementDto.class);
+    }
+
 
 }

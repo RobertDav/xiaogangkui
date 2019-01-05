@@ -38,6 +38,19 @@ public class ReimbursementController {
         return ResultMap.generate(SUCCESS_CODE,"",reimbursementDto);
     }
 
+
+    @RequestMapping(value = "/queryList", method = RequestMethod.POST)
+    public ResultMap queryList(@RequestBody FuzzySearchDto fuzzySearchDto){
+        List<ReimbursementDto> reimbursementDtos = reimbursementService.queryList(fuzzySearchDto);
+        List<ReimbursementDto> result = Lists.newArrayList();
+        if(CollectionUtils.isNotEmpty(reimbursementDtos)){
+            result = reimbursementDtos.subList(fuzzySearchDto.getStart(), reimbursementDtos.size() > fuzzySearchDto.getEnd() ? fuzzySearchDto.getEnd() : reimbursementDtos.size());
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("total",reimbursementDtos.size());
+        map.put("list",result);
+        return ResultMap.generate(SUCCESS_CODE,"",reimbursementDtos);
+    }
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     public ResultMap verify(@RequestBody ReimburseVerifyRecordDto param) {
         reimbursementService.verify(param);
