@@ -27,6 +27,7 @@ public class AttendanceController {
 
     @Autowired
     private AttendanceService attendanceService;
+
     @Autowired
     private AttendanceDao attendanceDao;
 

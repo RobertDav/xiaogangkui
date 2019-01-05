@@ -88,7 +88,7 @@ public class ContractColler {
     @RequestMapping(value = "/loadForceDetail",method = RequestMethod.POST)
     public ResultMap loadForceDetail(@RequestBody FuzzySearchDto fuzzySearchDto){
         ContractDto contractDto = contractDao.findById(fuzzySearchDto.getId());
-        List<ContractFoceDto> contractFoceDtos = contractDao.queryForceList(fuzzySearchDto.getId());
+        List<ContractFoceDto> contractFoceDtos = contractDao.queryForceListById(fuzzySearchDto.getId());
         contractDto.setContractFoceDtos(contractFoceDtos);
         return ResultMap.generate(SUCCESS_CODE,"",contractDto);
     }

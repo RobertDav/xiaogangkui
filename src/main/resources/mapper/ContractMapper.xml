@@ -34,4 +34,7 @@
         </if>
         order by A.createTime
     </select>
+    <select id="queryForceListById" parameterType="map" resultType="com.xiaogangkui.dto.ContractFoceDto">
+        select * from ts_contract_force_record where contactId = #{contactId} and parentId != 0
+    </select>
 </mapper>

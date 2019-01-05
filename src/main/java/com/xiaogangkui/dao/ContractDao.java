@@ -28,6 +28,5 @@ public interface ContractDao {
 
     List<ContractDto> queryForceList(FuzzySearchDto fuzzySearchDto);
 
-    @Select("select * from ts_contract_force_record where contactId = #{contactId} and parentId != 0 ")
-    List<ContractFoceDto> queryForceList(@Param("contactId") int contactId);
+    List<ContractFoceDto> queryForceListById(@Param("contactId") int contactId);
 }
