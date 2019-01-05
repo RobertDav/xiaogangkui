@@ -1,6 +1,7 @@
 package com.xiaogangkui.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.xiaogangkui.dao.ReimburseVerifyRecordDao;
 import com.xiaogangkui.dao.ReimbursementDao;
 import com.xiaogangkui.dto.FuzzySearchDto;
@@ -63,11 +64,11 @@ public class ReimbursementServiceImpl implements ReimbursementService {
     @Override
     public List<ReimbursementDto> queryVerifyList(FuzzySearchDto fuzzySearchDto) {
         List<Reimbursement> reimbursements = reimbursementDao.fuzzySearch(fuzzySearchDto);
-        if(CollectionUtils.isEmpty(reimbursements)) return null;
+        if(CollectionUtils.isEmpty(reimbursements)) return Lists.newArrayList();
         List<Reimbursement> collect = reimbursements.stream().filter(
                 c -> {
                     List<ReimbursementDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), ReimbursementDto.VerifyInfo.class);
-                    ReimbursementDto.VerifyInfo verifyInfo1 = verifyInfos.stream().filter(verifyInfo -> verifyInfo.getId() == fuzzySearchDto.getId()).findFirst().get();
+                    ReimbursementDto.VerifyInfo verifyInfo1 = verifyInfos.stream().filter(verifyInfo -> verifyInfo.getId() == fuzzySearchDto.getId()).findFirst().orElse(null);
                     if (Objects.nonNull(verifyInfo1)) {
                         return true;
                     } else {
@@ -81,7 +82,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
     @Override
     public List<ReimbursementDto> queryList(FuzzySearchDto fuzzySearchDto) {
         List<Reimbursement> reimbursements = reimbursementDao.fuzzySearch(fuzzySearchDto);
-        if(CollectionUtils.isEmpty(reimbursements)) return null;
+        if(CollectionUtils.isEmpty(reimbursements)) return Lists.newArrayList();
         return beanMapperUtil.batchMapper(reimbursements,ReimbursementDto.class);
     }
 

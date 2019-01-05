@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -78,7 +79,7 @@ public class LeaveServiceImpl implements LeaveService {
                 .filter(c ->
                         {
                             List<LeaveRecordDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), LeaveRecordDto.VerifyInfo.class);
-                            LeaveRecordDto.VerifyInfo verifyInfo = verifyInfos.stream().filter(v -> v.getId() == fuzzySearchDto.getId()).findFirst().get();
+                            LeaveRecordDto.VerifyInfo verifyInfo = verifyInfos.stream().filter(v -> v.getId() == fuzzySearchDto.getId()).findFirst().orElse(null);
                             if (Objects.nonNull(verifyInfo)) {
                                 return true;
                             } else {

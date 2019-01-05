@@ -19,10 +19,10 @@
             and customerId = #{customerId}
         </if>
         <if test="applyStatus != null">
-            and applyStaus = #{applyStatus}
+            and applyStatus = #{applyStatus}
         </if>
         <if test="applyer !=0">
-            applyer = #{applyer}
+            and applyer = #{applyer}
         </if>
     </select>
 </mapper>
