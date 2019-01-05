@@ -24,4 +24,14 @@
     <update id="updateStatus" parameterType="map">
         UPDATE t_contract set status = #{status} where id = #{id}
     </update>
+
+    <select id="queryForceList" parameterType="map" resultType="com.xiaogangkui.dto.ContractDto">
+        SELECT * from t_contract as A left join ts_contract_force_record as B
+        on A.id = B.contactId
+        WHERE A.customerId = #{customerId} and A.isDeleted = 0 and B.parentId = 0
+        <if test="collectStatus !=0">
+            and A.collectStatus = #{collectStatus}
+        </if>
+        order by A.createTime
+    </select>
 </mapper>

@@ -51,6 +51,8 @@ public class ContractDto implements Serializable {
     private List<ContractApproveDto> approveDtos;
     private int forceCollectStatus;
     private String forceCollectStatusDesc;
+    private String reviewIds;
+    private List<ContractFoceDto> contractFoceDtos;
 
     public enum ContractTypeEnums {
         UNCHECKED(0, "不需要审核"),
