@@ -17,4 +17,6 @@ public interface AttendanceDao {
     Attendance findById(@Param("id") int id);
 
     List<Attendance> fuzzySearch(FuzzySearchDto fuzzySearchDto);
+
+    int fuzzySearchCount(FuzzySearchDto fuzzySearchDto);
 }

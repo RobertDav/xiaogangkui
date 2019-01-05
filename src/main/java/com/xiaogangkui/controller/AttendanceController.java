@@ -1,6 +1,7 @@
 package com.xiaogangkui.controller;
 
 import com.google.common.collect.Lists;
+import com.xiaogangkui.dao.AttendanceDao;
 import com.xiaogangkui.dto.*;
 import com.xiaogangkui.service.AttendanceService;
 import com.xiaogangkui.service.ReimbursementService;
@@ -26,6 +27,8 @@ public class AttendanceController {
 
     @Autowired
     private AttendanceService attendanceService;
+    @Autowired
+    private AttendanceDao attendanceDao;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResultMap save(@RequestBody AttendanceDto attendanceDto) {
@@ -41,13 +44,10 @@ public class AttendanceController {
     @RequestMapping(value = "/queryList",method = RequestMethod.POST)
     public ResultMap queryList(@RequestBody FuzzySearchDto fuzzySearchDto){
         List<AttendanceDto> attendanceDtos = attendanceService.fuzzySearch(fuzzySearchDto);
-        List<AttendanceDto> result = Lists.newArrayList();
-        if(CollectionUtils.isNotEmpty(attendanceDtos)){
-            result = attendanceDtos.subList(fuzzySearchDto.getStart(), attendanceDtos.size() > fuzzySearchDto.getEnd() ? fuzzySearchDto.getEnd() : attendanceDtos.size());
-        }
+        int count = attendanceDao.fuzzySearchCount(fuzzySearchDto);
         Map<String,Object> map = new HashMap<>();
-        map.put("total",attendanceDtos.size());
-        map.put("list",result);
+        map.put("total",count);
+        map.put("list",attendanceDtos);
         return ResultMap.generate(SUCCESS_CODE,"",map);
     }
 }
