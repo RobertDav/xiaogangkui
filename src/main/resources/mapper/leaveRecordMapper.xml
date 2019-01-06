@@ -11,8 +11,8 @@
         <if test="applyerId != 0">
             and applyerId = #{applyerId}
         </if>
-        <if test="status != null">
-            and status =#{status}
+        <if test="leaveStatus != null">
+            and status =#{leaveStatus}
         </if>
         <if test="customerId != 0">
             and customerId = #{customerId}

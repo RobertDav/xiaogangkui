@@ -18,6 +18,8 @@ import java.util.Date;
 public class FuzzySearchDto implements Serializable {
     private int id;
     private int status;
+    private Integer leaveStatus;
+    private Integer reimburseStatus;
     private int applyerId;
     private int applyer;
     private int customerId;
