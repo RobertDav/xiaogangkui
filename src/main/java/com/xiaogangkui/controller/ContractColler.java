@@ -100,8 +100,9 @@ public class ContractColler {
             collectStatus = 4;
         }
         if(contractFoceDto.getStatus() == 2){
-            collectStatus = 2;
+            collectStatus = 5;
         }
+        contractFoceDto.setParentId(contractFoceDto.getContactId());
         contractDao.updateCollectStatus(contractFoceDto.getContactId(),collectStatus);
         return ResultMap.generate(SUCCESS_CODE,"");
     }

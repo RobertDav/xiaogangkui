@@ -18,8 +18,11 @@
         <if test=" customerId !=0">
             and customerId = #{customerId}
         </if>
-        <if test="reimburseStatus != null">
+        <if test="reimburseStatus != null and reimburseStatus != 3 ">
             and applyStatus = #{reimburseStatus}
+        </if>
+        <if test="reimburseStatus == 3">
+            and applyStatus in (1,2)
         </if>
         <if test="applyer !=0">
             and applyer = #{applyer}

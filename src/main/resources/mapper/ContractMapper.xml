@@ -5,8 +5,11 @@
         SELECT * from t_contract
         where customerId = #{customerId} and type =2
         and isDeleted = 0
-        <if test="status != 0">
+        <if test="status != 0 and status != 8">
            and  status = #{status}
+        </if>
+        <if test="status == 8">
+            and  status in (2,3)
         </if>
         order by createTime;
     </select>
@@ -29,8 +32,11 @@
         SELECT * from t_contract as A left join ts_contract_force_record as B
         on A.id = B.contactId
         WHERE A.customerId = #{customerId} and A.isDeleted = 0 and B.parentId = 0
-        <if test="collectStatus !=0">
+        <if test="collectStatus !=0 and collectStatus != 8">
             and A.collectStatus = #{collectStatus}
+        </if>
+        <if test="collectStatus == 8">
+            and A.collectStatus  in (4,5)
         </if>
         order by A.createTime
     </select>
