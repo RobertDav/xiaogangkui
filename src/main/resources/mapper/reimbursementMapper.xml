@@ -19,7 +19,7 @@
             and customerId = #{customerId}
         </if>
         <if test="reimburseStatus != null">
-            and applyStatus = #{applyStatus}
+            and applyStatus = #{reimburseStatus}
         </if>
         <if test="applyer !=0">
             and applyer = #{applyer}
