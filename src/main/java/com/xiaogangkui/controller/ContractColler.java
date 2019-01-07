@@ -33,7 +33,7 @@ public class ContractColler {
         if(CollectionUtils.isNotEmpty(contractDtos)){
             List<ContractDto> collect = contractDtos.stream().filter(contractDto -> {
                 List<Integer> integers = JSON.parseArray(contractDto.getApplyers(), Integer.class);
-                if (integers.contains(fuzzySearchDto.getId())) {
+                if (CollectionUtils.isNotEmpty(integers) && integers.contains(fuzzySearchDto.getId())) {
                     return true;
                 } else {
                     return false;
@@ -70,8 +70,8 @@ public class ContractColler {
         List<ContractDto> contractDtos = contractDao.queryForceList(fuzzySearchDto);
         if(CollectionUtils.isNotEmpty(contractDtos)){
             List<ContractDto> collect = contractDtos.stream().filter(contractDto -> {
-                List<Integer> integers = JSON.parseArray(contractDto.getReviewIds(), Integer.class);
-                if (integers.contains(fuzzySearchDto.getId())) {
+                List<Integer> integers = JSON.parseArray(contractDto.getReviewIdList(), Integer.class);
+                if (CollectionUtils.isNotEmpty(integers) && integers.contains(fuzzySearchDto.getId())) {
                     return true;
                 } else {
                     return false;

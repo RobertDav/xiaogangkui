@@ -73,7 +73,7 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public List<LeaveRecordDto> queryVerifyList(FuzzySearchDto fuzzySearchDto) {
         List<LeaveRecord> leaveRecords = leaveDao.fuzzySearch(fuzzySearchDto);
-        if(CollectionUtils.isEmpty(leaveRecords)) return null;
+        if(CollectionUtils.isEmpty(leaveRecords)) return Lists.newArrayList();
         List<LeaveRecordDto> leaveRecordDtos = beanMapperUtil.batchMapper(leaveRecords, LeaveRecordDto.class);
         List<LeaveRecordDto> collect = leaveRecordDtos.stream()
                 .filter(c ->

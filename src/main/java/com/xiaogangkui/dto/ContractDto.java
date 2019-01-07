@@ -52,6 +52,7 @@ public class ContractDto implements Serializable {
     private int forceCollectStatus;
     private String forceCollectStatusDesc;
     private String reviewIds;
+    private String reviewIdList;
     private List<ContractFoceDto> contractFoceDtos;
 
     public enum ContractTypeEnums {
