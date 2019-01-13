@@ -67,7 +67,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
         if(CollectionUtils.isEmpty(reimbursements)) return Lists.newArrayList();
         List<Reimbursement> collect = reimbursements.stream().filter(
                 c -> {
-                    if(StringUtils.isEmpty(c.getVerifyInfo())){
+                    if(StringUtils.isEmpty(c.getVerifyInfo()) || c.getVerifyInfo().equals("null")){
                         return false;
                     }else {
                         List<ReimbursementDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), ReimbursementDto.VerifyInfo.class);
