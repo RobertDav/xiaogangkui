@@ -67,13 +67,18 @@ public class ReimbursementServiceImpl implements ReimbursementService {
         if(CollectionUtils.isEmpty(reimbursements)) return Lists.newArrayList();
         List<Reimbursement> collect = reimbursements.stream().filter(
                 c -> {
-                    List<ReimbursementDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), ReimbursementDto.VerifyInfo.class);
-                    ReimbursementDto.VerifyInfo verifyInfo1 = verifyInfos.stream().filter(verifyInfo -> verifyInfo.getId() == fuzzySearchDto.getId()).findFirst().orElse(null);
-                    if (Objects.nonNull(verifyInfo1)) {
-                        return true;
-                    } else {
+                    if(StringUtils.isEmpty(c.getVerifyInfo())){
                         return false;
+                    }else {
+                        List<ReimbursementDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), ReimbursementDto.VerifyInfo.class);
+                        ReimbursementDto.VerifyInfo verifyInfo1 = verifyInfos.stream().filter(verifyInfo -> verifyInfo.getId() == fuzzySearchDto.getId()).findFirst().orElse(null);
+                        if (Objects.nonNull(verifyInfo1)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
+
                 }
         ).collect(Collectors.toList());
         return beanMapperUtil.batchMapper(collect,ReimbursementDto.class);
