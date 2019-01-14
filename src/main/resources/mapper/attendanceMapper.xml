@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaogangkui.dao.AttendanceDao">
     <insert id="create" parameterType="LeaveVerifyRecord" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_attendance(customerId,userId,userName ,createTime,isDeleted,type,address,longitude,latitude)
-        VALUES(#{customerId},#{userId},#{userName} ,#{createTime},#{isDeleted},#{type},#{address},#{longitude},#{latitude})
+        INSERT INTO t_attendance(customerId,userId,userName ,createTime,isDeleted,type,address,longitude,latitude,remark,againTime)
+        VALUES(#{customerId},#{userId},#{userName} ,#{createTime},#{isDeleted},#{type},#{address},#{longitude},#{latitude},#{remark},#{againTime})
     </insert>
     <select id="findById" parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where id = #{id}
