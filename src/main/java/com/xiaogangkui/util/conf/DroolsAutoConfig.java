@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 @Configuration
 public class DroolsAutoConfig {
-    private static final String RULES_PATH = "rules/";
+    private static final String RULES_PATH = "com/xiaogangkui/rules/";
 
     @Bean
     @ConditionalOnMissingBean(KieFileSystem.class)
