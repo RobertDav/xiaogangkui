@@ -8,6 +8,9 @@ mybatis:
   typeHandlersPackage: com.xiaogangkui.dao
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/obas?useUnicode=true&characterEncoding=utf-8
     username: root
