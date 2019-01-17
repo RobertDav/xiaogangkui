@@ -2,6 +2,7 @@ package com.xiaogangkui.controller;
 
 import com.xiaogangkui.entity.Address;
 import com.xiaogangkui.entity.AddressCheckResult;
+import com.xiaogangkui.util.rule.KieUtils;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,10 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/address")
     public void test(){
+        KieSession kieSession = KieUtils.getKieContainer().newKieSession();
+
         Address address = new Address();
-        address.setPostcode("99425");
+        address.setPostcode("994251");
 
         AddressCheckResult result = new AddressCheckResult();
         kieSession.insert(address);
@@ -33,6 +36,8 @@ public class TestController {
         if(result.isPostCodeResult()){
             System.out.println("规则校验通过");
         }
+
+        kieSession.dispose();
 
     }
 
