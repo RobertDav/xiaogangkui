@@ -1,5 +1,6 @@
 package com.xiaogangkui.impl;
 
+import com.google.common.collect.Lists;
 import com.xiaogangkui.dao.AttendanceDao;
 import com.xiaogangkui.dto.AttendanceDto;
 import com.xiaogangkui.dto.FuzzySearchDto;
@@ -34,10 +35,20 @@ public class AttendanceServiceImpl implements AttendanceService {
         String time = format.format(attendanceDto.getCreateTime());
         List<Attendance> attendances = attendanceDao.queryByTime(attendanceDto.getUserId(), time);
         if(CollectionUtils.isNotEmpty(attendances)){
-            List<Attendance> collect = attendances.stream().filter(attendance -> attendance.getType() == attendanceDto.getType())
-                    .filter(attendance -> (attendanceDto.getType() == 3 && attendance.getType() == 1))
-                    .filter(attendance -> (attendanceDto.getType() == 4 && attendance.getType() == 2))
-                    .collect(Collectors.toList());
+            List<Attendance> collect = Lists.newArrayList();
+            for (Attendance attendance : attendances) {
+                if(attendance.getType() == attendanceDto.getType()){
+                    collect.add(attendance);
+                }
+                if(attendanceDto.getType() == 3 &&  attendance.getType() == 1){
+                    collect.add(attendance);
+                }
+                if(attendanceDto.getType() == 4 &&  attendance.getType() == 2){
+                    collect.add(attendance);
+                }
+            }
+
+
             if(CollectionUtils.isNotEmpty(collect)){
                 throw  new ApplicationException("请不要重复打卡");
             }
