@@ -45,4 +45,8 @@
             and #{endTime} >= createTime
         </if>
     </select>
+
+    <select id="queryByTime" parameterType="map" resultType="Attendance">
+        SELECT * from t_attendance where  userId = #{userId} and isDeleted = 0 and   DATE_FORMAT(createTime, '%Y-%m-%d') = #{time}
+    </select>
 </mapper>

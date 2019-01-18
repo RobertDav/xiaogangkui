@@ -19,4 +19,6 @@ public interface AttendanceDao {
     List<Attendance> fuzzySearch(FuzzySearchDto fuzzySearchDto);
 
     int fuzzySearchCount(FuzzySearchDto fuzzySearchDto);
+
+    List<Attendance> queryByTime(@Param("userId") int userId,@Param("time") String time);
 }
