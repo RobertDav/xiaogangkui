@@ -1,5 +1,6 @@
-package com.xiaogangkui.util.conf;
+package com.xiaogangkui.util.rule;
 
+import com.xiaogangkui.util.rule.KieUtils;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.builder.*;
@@ -16,12 +17,10 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 
-/**
- * @author Created by luchunyu
- */
 @Configuration
-public class DroolsAutoConfig {
-    private static final String RULES_PATH = "com/xiaogangkui/rules/";
+public class DroolsAutoConfigure {
+
+    private static final String RULES_PATH = "rules/";
 
     @Bean
     @ConditionalOnMissingBean(KieFileSystem.class)
@@ -44,7 +43,6 @@ public class DroolsAutoConfig {
         final KieRepository kieRepository = getKieServices().getRepository();
 
         kieRepository.addKieModule(new KieModule() {
-            @Override
             public ReleaseId getReleaseId() {
                 return kieRepository.getDefaultReleaseId();
             }
@@ -53,6 +51,8 @@ public class DroolsAutoConfig {
         KieBuilder kieBuilder = getKieServices().newKieBuilder(kieFileSystem());
         kieBuilder.buildAll();
 
+        KieContainer kieContainer = getKieServices().newKieContainer(kieRepository.getDefaultReleaseId());
+        KieUtils.setKieContainer(kieContainer);
         return getKieServices().newKieContainer(kieRepository.getDefaultReleaseId());
     }
 
@@ -70,6 +70,7 @@ public class DroolsAutoConfig {
     @ConditionalOnMissingBean(KieSession.class)
     public KieSession kieSession() throws IOException {
         KieSession kieSession = kieContainer().newKieSession();
+        KieUtils.setKieSession(kieSession);
         return kieSession;
     }
 
@@ -78,5 +79,4 @@ public class DroolsAutoConfig {
     public KModuleBeanFactoryPostProcessor kiePostProcessor() {
         return new KModuleBeanFactoryPostProcessor();
     }
-
 }
