@@ -29,7 +29,7 @@ public class ReloadDroolsRules {
 
     private String loadRules() {
         // 从数据库加载的规则
-        return "package plausibcheck.adress\n\n import com.neo.drools.model.Address;\n import com.neo.drools.model.fact.AddressCheckResult;\n\n rule \"Postcode 6 numbers\"\n\n    when\n  then\n        System.out.println(\"规则2中打印日志：校验通过!\");\n end";
+        return "package plausibcheck.adress\n\n import com.xiaogangkui.entity.Address;\n import com.xiaogangkui.entity.AddressCheckResult;\n\n rule \"Postcode 6 numbers\"\n\n    when\n  then\n        System.out.println(\"规则2中打印日志：校验通过!\");\n end";
 
     }
 
