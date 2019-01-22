@@ -1,5 +1,11 @@
 server:
   port: 8888
+#  Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 #公共配置与profiles选择无关
 mybatis:

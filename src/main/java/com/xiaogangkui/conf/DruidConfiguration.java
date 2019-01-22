@@ -1,4 +1,4 @@
-package com.xiaogangkui.util.conf;
+package com.xiaogangkui.conf;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

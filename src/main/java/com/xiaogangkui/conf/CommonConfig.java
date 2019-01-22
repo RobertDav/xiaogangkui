@@ -1,4 +1,4 @@
-package com.xiaogangkui.util.conf;
+package com.xiaogangkui.conf;
 
 
 import com.xiaogangkui.util.common.BeanMapperUtil;
