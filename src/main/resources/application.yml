@@ -16,6 +16,9 @@ management:
 info:
   head: head
   body: body
+devtools:
+  restart:
+    enabled: true #是否支持热部署
 #公共配置与profiles选择无关
 mybatis:
   typeAliasesPackage: com.xiaogangkui.entity
