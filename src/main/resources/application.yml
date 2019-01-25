@@ -16,9 +16,6 @@ management:
 info:
   head: head
   body: body
-devtools:
-  restart:
-    enabled: true #是否支持热部署
 #公共配置与profiles选择无关
 mybatis:
   typeAliasesPackage: com.xiaogangkui.entity
@@ -29,6 +26,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  security:
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR_ADMIN
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/cantaloupe?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
