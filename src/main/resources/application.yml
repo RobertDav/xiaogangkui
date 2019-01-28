@@ -21,10 +21,10 @@ management:
     port: 9999
   security:
     enabled: false
-#    user:
-#      name: actuator
-#      password: actuator
-#      roles: ACTUATOR_ADMIN
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR_ADMIN
 
 info:
   head: head
