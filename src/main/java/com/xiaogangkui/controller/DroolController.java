@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 @RequestMapping("/test")
 @Controller
-public class TestController {
+public class DroolController {
 
 
     @Resource
