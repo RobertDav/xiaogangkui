@@ -25,7 +25,7 @@ public class CompanyServiceTest extends BaseTest {
     }
     @Test
     public void testRedis(){
-        Object testKey = redisTemplate.opsForValue().get("testKey");
-        System.out.println(testKey);
+//        redisTemplate.opsForValue().set("helloWorld","testHelloWorld");
+        System.out.println(redisTemplate.opsForValue().get("helloWorld"));
     }
 }
