@@ -15,7 +15,7 @@ public class RedisTest extends BaseTest{
     private RedisTemplate redisTemplate;
     @Test
     public void testLoad(){
-        System.out.println( testService.loadInfo("test"));
+        System.out.println( testService.loadInfo("testHello"));
     }
     @Test
     public void testTemplate(){

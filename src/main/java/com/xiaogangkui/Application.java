@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @ImportResource(locations = {"classpath:conf/*.xml"})
 @EnableScheduling
-@EnableCaching
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);
