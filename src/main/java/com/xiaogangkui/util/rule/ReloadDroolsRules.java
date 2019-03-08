@@ -1,6 +1,9 @@
 package com.xiaogangkui.util.rule;
 
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.drools.core.util.IoUtils;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -8,7 +11,7 @@ import org.kie.api.builder.Message;
 import org.kie.api.builder.Results;
 import org.springframework.stereotype.Component;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 @Component
 public class ReloadDroolsRules {
@@ -30,7 +33,25 @@ public class ReloadDroolsRules {
 
     private String loadRules() {
         // 从数据库加载的规则
-        return "package plausibcheck.adress\n\n import com.xiaogangkui.entity.Address;\n import com.xiaogangkui.entity.AddressCheckResult;\n\n rule \"Postcode 6 numbers\"\n\n    when\n  then\n        System.out.println(\"规则2中打印日志：校验通过!\");\n end";
+
+        StringBuffer buffer = new StringBuffer();
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\LuChunYu\\Desktop\\temp.drl"));
+            String s = null;
+            while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
+                buffer.append(s+"\n");
+            }
+        }catch (Exception e){
+
+        }
+        String xml = buffer.toString();
+        System.out.println(xml);
+        return xml;
+//        return "package plausibcheck.adress\n\n import com.xiaogangkui.entity.Address;\n import com.xiaogangkui.entity.AddressCheckResult;\n\n rule \"Postcode 6 numbers\"\n\n    when\n  then\n        System.out.println(\"规则2中打印日志：校验通过!\");\n end";
+
+
+
+
 
     }
 
