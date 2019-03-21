@@ -29,7 +29,7 @@ public class DroolController {
     private ReloadDroolsRules rules;
 
     @RequestMapping("/address")
-    public void test(){
+    public String test(){
         KieSession kieSession = KieUtils.getKieSession();
         Address address = new Address();
         address.setPostcode("994251");
@@ -41,17 +41,19 @@ public class DroolController {
         if(result.isPostCodeResult()){
             System.out.println("规则校验通过");
         }
+        return "hhh";
     }
 
     @RequestMapping(value = "/checkMemberInfo")
-    public void checkMemberInfo(){
+    public String checkMemberInfo(){
         KieSession kieSession = KieUtils.getKieSession();
         MemberInfoDto memberInfoDto = MemberInfoDto.builder().gender(1).memberName("拖鞋").memberLevel("牛逼plus").build();
         RuleDto ruleDto = RuleDto.builder().memberCheck(1).build();
         kieSession.insert(memberInfoDto);
         kieSession.insert(ruleDto);
-        kieSession.fireAllRules();
-
+        int count = kieSession.fireAllRules();
+        System.out.println("触发了" + count + "条规则");
+        return "hello";
     }
 
 
