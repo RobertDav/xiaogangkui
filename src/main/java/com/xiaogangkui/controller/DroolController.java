@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * @author Created by luchunyu
  */
-@RequestMapping("/test")
+@RequestMapping("/drool")
 @RestController
 public class DroolController {
 

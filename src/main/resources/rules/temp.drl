@@ -4,7 +4,7 @@ import com.xiaogangkui.dto.RuleDto
 
 rule "memberCheck"
   when
-  	memberInfoDto:MemberInfoDto(memberName == "拖鞋")
+  	$memberInfoDto:MemberInfoDto(memberName == "拖鞋")
   then
     System.out.println("这个是对的");
 end
