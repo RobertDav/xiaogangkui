@@ -16,4 +16,6 @@ public interface ReimburseVerifyRecordDao {
     ReimburseVerifyRecord findById(@Param("id") int id);
 
     List<ReimburseVerifyRecord> queryByParentId(@Param("parentId") int parentId);
+
+    ReimburseVerifyRecord findByActorIdAndReimburseId(@Param("actorId") int actorId,@Param("reimburseId") int reimburseId);
 }

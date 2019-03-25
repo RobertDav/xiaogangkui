@@ -11,4 +11,7 @@
     <select id="queryByParentId" parameterType="map" resultType="ReimburseVerifyRecord">
         SELECT * from ts_reimburese_verify_record where reimburseId = #{parentId}
     </select>
+    <select id="findByActorIdAndReimburseId" parameterType="map" resultType="ReimburseVerifyRecord">
+        SELECT * from ts_reimburese_verify_record where actorId = #{actorId} and reimburseId = #{reimburseId}
+    </select>
 </mapper>

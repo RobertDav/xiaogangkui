@@ -19,4 +19,5 @@ public interface ReimbursementDao {
     void updateStatus(@Param("id") int id,@Param("applyStatus") int applyStatus);
 
     List<Reimbursement> fuzzySearch(FuzzySearchDto fuzzySearchDto);
+
 }

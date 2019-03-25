@@ -62,7 +62,17 @@ public class ReimbursementServiceImpl implements ReimbursementService {
     @Override
     public void verify(ReimburseVerifyRecordDto reimburseVerifyRecordDto) {
         reimburseVerifyRecordDao.create(beanMapperUtil.transForm(reimburseVerifyRecordDto, ReimburseVerifyRecord.class));
-        reimbursementDao.updateStatus(reimburseVerifyRecordDto.getReimburseId(),reimburseVerifyRecordDto.getStatus());
+        // 判断是否是最后一次审核通过
+        ReimbursementDto reimbursementDto = load(reimburseVerifyRecordDto.getReimburseId());
+        if(!CollectionUtils.isEmpty(reimbursementDto.getVerifyInfoList())){
+            if(reimbursementDto.getVerifyInfoList().get(reimbursementDto.getVerifyInfoList().size()-1).getId() == reimburseVerifyRecordDto.getActorId()
+             && reimburseVerifyRecordDto.getStatus() == 1){
+                reimbursementDao.updateStatus(reimburseVerifyRecordDto.getReimburseId(),reimburseVerifyRecordDto.getStatus());
+            }else if (reimburseVerifyRecordDto.getStatus() == 2){
+                reimbursementDao.updateStatus(reimburseVerifyRecordDto.getReimburseId(),reimburseVerifyRecordDto.getStatus());
+            }
+        }
+
     }
 
     @Override
@@ -74,8 +84,14 @@ public class ReimbursementServiceImpl implements ReimbursementService {
                     if(StringUtils.isEmpty(c.getVerifyInfo()) || c.getVerifyInfo().equals("null")){
                         return false;
                     }else {
+                        if(fuzzySearchDto.getStatus() == 0){
+                            ReimburseVerifyRecord reimburseInfo = reimburseVerifyRecordDao.findByActorIdAndReimburseId(fuzzySearchDto.getId(), c.getId());
+                            if(Objects.nonNull(reimburseInfo)) return false;
+
+                        }
                         List<ReimbursementDto.VerifyInfo> verifyInfos = JSON.parseArray(c.getVerifyInfo(), ReimbursementDto.VerifyInfo.class);
                         ReimbursementDto.VerifyInfo verifyInfo1 = verifyInfos.stream().filter(verifyInfo -> verifyInfo.getId() == fuzzySearchDto.getId()).findFirst().orElse(null);
+                        //当需要用户审核的时候 判断这个用户是否有审核资格
                         if (Objects.nonNull(verifyInfo1)) {
                             return true;
                         } else {
