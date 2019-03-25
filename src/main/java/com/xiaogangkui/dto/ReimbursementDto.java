@@ -31,7 +31,8 @@ public class ReimbursementDto implements Serializable {
     private String verifyInfo;
     private int id;
     private Date createTime;
-
+    private List<String> certificates;
+    private String certificate;
     private List<ReimburseVerifyRecordDto> verifyRecordDtos;
 
     private List<VerifyInfo> verifyInfoList;

@@ -41,4 +41,6 @@ public class CommonDto implements Serializable{
     private int managerId;//部门主管id
     private String managerName;//主管姓名
     private String companyName;
+    private String departmentName;
+    private String departmentMemo;
 }

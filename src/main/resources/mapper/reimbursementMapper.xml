@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaogangkui.dao.ReimbursementDao">
     <insert id="create" parameterType="Reimbursement" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_reimbursement(customerId,applyer,applyRemark,applyTime,status,amount,unPayAmount,createTime,isDeleted,projectId,applyerName,verifyInfo,applyStatus
+        INSERT INTO t_reimbursement(customerId,applyer,applyRemark,applyTime,status,amount,unPayAmount,createTime,isDeleted,projectId,applyerName,verifyInfo,applyStatus,certificate
         )
-        VALUES(#{customerId},#{applyer},#{applyRemark},#{applyTime},#{status},#{amount},#{unPayAmount},#{createTime},#{isDeleted},#{projectId},#{applyerName},#{verifyInfo},#{applyStatus})
+        VALUES(#{customerId},#{applyer},#{applyRemark},#{applyTime},#{status},#{amount},#{unPayAmount},#{createTime},#{isDeleted},#{projectId},#{applyerName},#{verifyInfo},#{applyStatus},#{certificate})
     </insert>
     <select id="findById" parameterType="map" resultType="Reimbursement">
         SELECT * from t_reimbursement where id = #{id}

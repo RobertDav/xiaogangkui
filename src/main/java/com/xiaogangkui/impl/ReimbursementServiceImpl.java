@@ -37,6 +37,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
     public void save(ReimbursementDto reimbursementDto) {
         Reimbursement reimbursement = beanMapperUtil.transForm(reimbursementDto, Reimbursement.class);
         reimbursement.setVerifyInfo(JSON.toJSONString(reimbursementDto.getVerifyInfoList()));
+        reimbursement.setCertificate(JSON.toJSONString(reimbursementDto.getCertificates()));
         reimbursementDao.create(reimbursement);
     }
 
@@ -46,6 +47,9 @@ public class ReimbursementServiceImpl implements ReimbursementService {
         ReimbursementDto reimbursementDto = beanMapperUtil.transForm(reimbursement, ReimbursementDto.class);
         if(!StringUtils.isEmpty(reimbursement.getVerifyInfo())){
             reimbursementDto.setVerifyInfoList(JSON.parseArray(reimbursementDto.getVerifyInfo(), ReimbursementDto.VerifyInfo.class));
+        }
+        if(!StringUtils.isEmpty(reimbursement.getCertificate())){
+            reimbursementDto.setCertificates(JSON.parseArray(reimbursementDto.getCertificate(), String.class));
         }
         List<ReimburseVerifyRecord> reimburseVerifyRecords = reimburseVerifyRecordDao.queryByParentId(id);
         List<ReimburseVerifyRecordDto> reimburseVerifyRecordDtos = beanMapperUtil.batchMapper(reimburseVerifyRecords, ReimburseVerifyRecordDto.class);

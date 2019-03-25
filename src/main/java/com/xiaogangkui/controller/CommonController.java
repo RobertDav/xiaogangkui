@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.xiaogangkui.dto.ResultMap.ERROR_CODE;
 import static com.xiaogangkui.dto.ResultMap.SUCCESS_CODE;
@@ -43,6 +44,7 @@ public class CommonController {
         String md5 = MD5Util.MD5(fuzzySearchDto.getPassword());
         fuzzySearchDto.setPassword(md5);
         CommonDto commonDto = commonDao.loadByAccount(fuzzySearchDto);
+        if(Objects.isNull(commonDto)) return ResultMap.generate(ERROR_CODE,"用户名密码不匹配",null);
         return ResultMap.generate(SUCCESS_CODE,"",commonDto);
     }
 

@@ -27,4 +27,5 @@ public class Reimbursement extends BaseEntity {
     private String applyerName;
     private int applyStatus;
     private String verifyInfo;
+    private String certificate;
 }
