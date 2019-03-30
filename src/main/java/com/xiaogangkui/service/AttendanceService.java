@@ -1,6 +1,7 @@
 package com.xiaogangkui.service;
 
 import com.xiaogangkui.dto.AttendanceDto;
+import com.xiaogangkui.dto.AttendanceReportDto;
 import com.xiaogangkui.dto.FuzzySearchDto;
 
 import java.util.List;
@@ -15,4 +16,11 @@ public interface AttendanceService {
     AttendanceDto findById(int id);
 
     List<AttendanceDto> fuzzySearch(FuzzySearchDto fuzzySearchDto);
+
+    /**
+     * 查询考勤报表
+     * @param fuzzySearchDto
+     * @return
+     */
+    AttendanceReportDto totalReport(FuzzySearchDto fuzzySearchDto);
 }

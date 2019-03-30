@@ -2,7 +2,10 @@ package com.xiaogangkui.impl;
 
 import com.google.common.collect.Lists;
 import com.xiaogangkui.dao.AttendanceDao;
+import com.xiaogangkui.dao.CommonDao;
 import com.xiaogangkui.dto.AttendanceDto;
+import com.xiaogangkui.dto.AttendanceReportDto;
+import com.xiaogangkui.dto.CommonDto;
 import com.xiaogangkui.dto.FuzzySearchDto;
 import com.xiaogangkui.entity.Attendance;
 import com.xiaogangkui.service.AttendanceService;
@@ -28,6 +31,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     private AttendanceDao attendanceDao;
     @Autowired
     private BeanMapperUtil beanMapperUtil;
+    @Autowired
+    private CommonDao commonDao;
     @Override
     public void save(AttendanceDto attendanceDto) {
         //查询用户是否已经打过卡
@@ -67,6 +72,14 @@ public class AttendanceServiceImpl implements AttendanceService {
         return beanMapperUtil.batchMapper(attendances,AttendanceDto.class);
     }
 
+    @Override
+    public AttendanceReportDto totalReport(FuzzySearchDto fuzzySearchDto) {
+        List<CommonDto> users = commonDao.queryAllUser(fuzzySearchDto);
+        List<AttendanceReportDto> reportDtos = attendanceDao.groupTotalReport(fuzzySearchDto);
+
+        //计算考勤人数
+        return null;
+    }
 
 
 }

@@ -15,4 +15,5 @@
     <select id="loadByUserId" parameterType="map" resultType="com.xiaogangkui.dto.CommonDto">
         SELECT * from t_user WHERE  id = #{id}
     </select>
+
 </mapper>

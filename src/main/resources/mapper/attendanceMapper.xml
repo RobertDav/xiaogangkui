@@ -49,4 +49,9 @@
     <select id="queryByTime" parameterType="map" resultType="Attendance">
         SELECT * from t_attendance where  userId = #{userId} and isDeleted = 0 and   DATE_FORMAT(createTime, '%Y-%m-%d') = #{time}
     </select>
+    <select id="groupTotalReport" parameterType="map" resultType="com.xiaogangkui.dto.AttendanceReportDto">
+        select count(1) as total,userId,userName,type,dateformat('%Y-%m-%d',createTime) as createTime  from t_attendance where customerId = #{customerId} and isDeleted = 0
+        and createTime >= #{startTime} and #{endTime} >= createTime
+        group by userId,dateformat('%Y-%m-%d',createTime),type
+    </select>
 </mapper>

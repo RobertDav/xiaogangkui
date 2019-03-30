@@ -52,4 +52,10 @@ public class AttendanceController {
         map.put("list",attendanceDtos);
         return ResultMap.generate(SUCCESS_CODE,"",map);
     }
+
+
+    @RequestMapping(value = "/totalReport",method = RequestMethod.POST)
+    public ResultMap totalReport(@RequestBody FuzzySearchDto fuzzySearchDto){
+        return null;
+    }
 }
