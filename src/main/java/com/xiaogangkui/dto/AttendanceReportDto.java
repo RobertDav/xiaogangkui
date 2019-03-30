@@ -17,4 +17,9 @@ public class AttendanceReportDto implements Serializable {
     private String userName;
     private int type;
     private String createTime;
+
+    private int fullAttendance;
+    private int notAttendance;
+    private int leaveCount;
+
 }
