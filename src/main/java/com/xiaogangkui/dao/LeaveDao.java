@@ -19,4 +19,6 @@ public interface LeaveDao {
     List<LeaveRecord> fuzzySearch(FuzzySearchDto fuzzySearchDto);
 
     LeaveRecord findById(@Param("id") int id);
+
+
 }

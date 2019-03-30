@@ -3,12 +3,10 @@ package com.xiaogangkui.impl;
 import com.google.common.collect.Lists;
 import com.xiaogangkui.dao.AttendanceDao;
 import com.xiaogangkui.dao.CommonDao;
-import com.xiaogangkui.dto.AttendanceDto;
-import com.xiaogangkui.dto.AttendanceReportDto;
-import com.xiaogangkui.dto.CommonDto;
-import com.xiaogangkui.dto.FuzzySearchDto;
+import com.xiaogangkui.dto.*;
 import com.xiaogangkui.entity.Attendance;
 import com.xiaogangkui.service.AttendanceService;
+import com.xiaogangkui.service.LeaveService;
 import com.xiaogangkui.util.common.ApplicationException;
 import com.xiaogangkui.util.common.BeanMapperUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -38,6 +36,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     private BeanMapperUtil beanMapperUtil;
     @Autowired
     private CommonDao commonDao;
+    @Autowired
+    private LeaveService leaveService;
     @Override
     public void save(AttendanceDto attendanceDto) {
         //查询用户是否已经打过卡
@@ -82,6 +82,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         fuzzySearchDto.setEndTime(getEndTime(fuzzySearchDto.getEndTime()));
         List<CommonDto> users = commonDao.queryAllUser(fuzzySearchDto);
         List<AttendanceReportDto> reportDtos = attendanceDao.groupTotalReport(fuzzySearchDto);
+        fuzzySearchDto.setStatus(1);
         AttendanceReportDto returnReportDto = AttendanceReportDto.builder().build();
         int fullAttendance = 0;
         int notAttendance = 0;
@@ -94,6 +95,11 @@ public class AttendanceServiceImpl implements AttendanceService {
                 if(attendanceReportDtos.size() >= diffDay * 2){
                     fullAttendance ++;
                 }
+            }
+            List<LeaveRecordDto> leaveRecordDtos = leaveService.fuzzySearch(fuzzySearchDto);
+            if(CollectionUtils.isNotEmpty(leaveRecordDtos)){
+                Map<Integer, List<LeaveRecordDto>> leaveCollect = leaveRecordDtos.stream().collect(Collectors.groupingBy(LeaveRecordDto::getApplyerId));
+                returnReportDto.setLeaveCount(leaveCollect.keySet().size());
             }
             notAttendance =  users.size() - fullAttendance;
             returnReportDto.setNotAttendance(notAttendance);
