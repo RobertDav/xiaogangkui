@@ -77,7 +77,6 @@ public class CommonController {
         reportDto.setPartMakeBidCount(reportDto1.getPartCount());
         reportDto.setPartBidCount(reportDto1.getPartCount() - reportDto2.getPartCount());
         reportDto.setPartHitBidCount(reportDto3.getPartCount());
-        reportDto.setPartBidCount(reportDto1.getPartMakeBidCount());
         return ResultMap.generate(SUCCESS_CODE,"",reportDto);
     }
 
