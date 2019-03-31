@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,7 +20,11 @@ public class AttendanceReportDto implements Serializable {
     private String createTime;
 
     private int fullAttendance;
+    private List<UserDto> fullAttendanceList;
+    private List<UserDto> notAttendanceList;
+    private List<UserDto> leaveList;
     private int notAttendance;
     private int leaveCount;
+
 
 }

@@ -23,4 +23,5 @@ public interface AttendanceService {
      * @return
      */
     AttendanceReportDto totalReport(FuzzySearchDto fuzzySearchDto);
+
 }

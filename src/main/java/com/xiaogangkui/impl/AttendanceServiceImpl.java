@@ -90,17 +90,32 @@ public class AttendanceServiceImpl implements AttendanceService {
         if(CollectionUtils.isNotEmpty(reportDtos)){
             Map<Integer, List<AttendanceReportDto>> collect = reportDtos.stream().collect(Collectors.groupingBy(AttendanceReportDto::getUserId));
             long diffDay = getDiffDay(fuzzySearchDto.getStartTime(),fuzzySearchDto.getEndTime());
+            List<Integer> userIds = Lists.newArrayList();
             for (Integer usrId : collect.keySet()) {
                 List<AttendanceReportDto> attendanceReportDtos = collect.get(usrId);
                 if(attendanceReportDtos.size() >= diffDay * 2){
                     fullAttendance ++;
+                    userIds.add(usrId);
                 }
             }
+            List<UserDto> fullAttendanceList = users.stream().filter(c -> userIds.contains(c.getId())).map(c ->
+                    UserDto.builder().id(c.getId()).name(c.getName()).build()
+            ).collect(Collectors.toList());
+            List<UserDto> notAttendanceList = users.stream().filter(c -> !userIds.contains(c.getId())).map(c ->
+                    UserDto.builder().id(c.getId()).name(c.getName()).build()
+            ).collect(Collectors.toList());
+            returnReportDto.setFullAttendanceList(fullAttendanceList);
+            returnReportDto.setNotAttendanceList(notAttendanceList);
             List<LeaveRecordDto> leaveRecordDtos = leaveService.fuzzySearch(fuzzySearchDto);
             if(CollectionUtils.isNotEmpty(leaveRecordDtos)){
                 Map<Integer, List<LeaveRecordDto>> leaveCollect = leaveRecordDtos.stream().collect(Collectors.groupingBy(LeaveRecordDto::getApplyerId));
-                returnReportDto.setLeaveCount(leaveCollect.keySet().size());
+                leaveCount = leaveCollect.keySet().size();
+                List<UserDto> leaveList = users.stream().filter(c -> !leaveCollect.keySet().contains(c.getId())).map(c ->
+                        UserDto.builder().id(c.getId()).name(c.getName()).build()
+                ).collect(Collectors.toList());
+                returnReportDto.setLeaveList(leaveList);
             }
+            returnReportDto.setLeaveCount(leaveCount);
             notAttendance =  users.size() - fullAttendance;
             returnReportDto.setNotAttendance(notAttendance);
             returnReportDto.setFullAttendance(fullAttendance);
