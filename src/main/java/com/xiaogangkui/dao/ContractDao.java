@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,4 +36,8 @@ public interface ContractDao {
 
     @Update("update t_contract set collectStatus = #{collectStatus} where id = #{id}")
     void updateCollectStatus(@Param("id") int id,@Param("collectStatus") int collectStatus);
+
+    Double sumPayAmountByContactId(@Param("contactId") int contactId);
+
+    Date findLastPayTime(@Param("contactId") int contactId);
 }

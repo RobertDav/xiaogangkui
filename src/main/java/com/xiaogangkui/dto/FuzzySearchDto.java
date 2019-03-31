@@ -35,4 +35,8 @@ public class FuzzySearchDto implements Serializable {
     private int limit;
     private int collectStatus;
     private String time;
+    //考勤类型明细1全勤 2请假 3缺勤
+    private int attendanceType;
+    private int financeType;
+    private int payType;
 }

@@ -79,6 +79,13 @@ public class LeaveController {
         return ResultMap.generate(SUCCESS_CODE,"",map);
     }
 
-    
+
+    @RequestMapping(value = "/queryLeaveList", method = RequestMethod.POST)
+    public ResultMap queryLeaveList(@RequestBody FuzzySearchDto fuzzySearchDto) {
+        List<LeaveRecordDto> leaveRecordDtos = leaveService.fuzzySearch(fuzzySearchDto);
+        return ResultMap.generate(SUCCESS_CODE,"",leaveRecordDtos);
+    }
+
+
 
 }

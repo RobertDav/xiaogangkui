@@ -41,10 +41,17 @@
         order by A.createTime
     </select>
     <select id="queryForceListById" parameterType="map" resultType="com.xiaogangkui.dto.ContractFoceDto">
-        select * from ts_contract_force_record where contactId = #{contactId} and parentId != 0
+        select * from ts_contract_force_record where contactId = #{contactId} and parentId != 0 and isDeleted = 0
     </select>
     <insert id="save" parameterType="map">
         INSERT INTO ts_contract_force_record(actor,status,createTime,  isDeleted,contactId,customerId,parentId,actorName,remark)
         VALUES (#{actor},#{status},#{createTime},#{isDeleted}  ,#{contactId},#{customerId},#{parentId},#{actorName},#{remark})
     </insert>
+    <select id="sumPayAmountByContactId" parameterType="map" resultType="java.lang.Double">
+        select sum(payAmount) from ts_contract_record where contactId = #{contactId}  and isDeleted = 0
+    </select>
+    <select id="findLastPayTime" parameterType="map" resultType="java.util.Date">
+        select payTime from ts_contract_record where contactId = #{contactId}  and isDeleted = 0 order by payTime
+        desc limit 0,1
+    </select>
 </mapper>

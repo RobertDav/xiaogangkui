@@ -54,8 +54,17 @@ public class AttendanceController {
     }
 
 
+
     @RequestMapping(value = "/totalReport",method = RequestMethod.POST)
     public ResultMap totalReport(@RequestBody FuzzySearchDto fuzzySearchDto){
-        return null;
+        AttendanceReportDto attendanceReportDto = attendanceService.totalReport(fuzzySearchDto);
+        return ResultMap.generate(SUCCESS_CODE,"",attendanceReportDto);
     }
+
+    @RequestMapping(value = "/queryAttendanceList",method = RequestMethod.POST)
+    public ResultMap queryAttendanceList(@RequestBody FuzzySearchDto fuzzySearchDto){
+        List<AttendanceDto> attendanceDtos = attendanceService.fuzzySearch(fuzzySearchDto);
+        return ResultMap.generate(SUCCESS_CODE,"",attendanceDtos);
+    }
+
 }

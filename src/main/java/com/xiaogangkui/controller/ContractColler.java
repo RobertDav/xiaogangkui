@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,10 @@ public class ContractColler {
         if(CollectionUtils.isNotEmpty(contractApproveDtos)){
             contractDto.setApproveDtos(contractApproveDtos);
         }
+        double hasPayAmount = contractDao.sumPayAmountByContactId(contractDto.getId());
+        Date lastPayTime = contractDao.findLastPayTime(contractDto.getId());
+        contractDto.setHasPayAmount(hasPayAmount);
+        contractDto.setLastPayTime(lastPayTime);
         return ResultMap.generate(SUCCESS_CODE,"",contractDto);
     }
 

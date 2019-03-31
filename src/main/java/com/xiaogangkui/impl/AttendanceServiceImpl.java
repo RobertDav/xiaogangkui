@@ -82,7 +82,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         fuzzySearchDto.setEndTime(getEndTime(fuzzySearchDto.getEndTime()));
         List<CommonDto> users = commonDao.queryAllUser(fuzzySearchDto);
         List<AttendanceReportDto> reportDtos = attendanceDao.groupTotalReport(fuzzySearchDto);
-        fuzzySearchDto.setStatus(1);
+        fuzzySearchDto.setLeaveStatus(1);
         AttendanceReportDto returnReportDto = AttendanceReportDto.builder().build();
         int fullAttendance = 0;
         int notAttendance = 0;
@@ -123,6 +123,8 @@ public class AttendanceServiceImpl implements AttendanceService {
         //计算考勤人数
         return returnReportDto;
     }
+
+
 
     public long getDiffDay(Date start, Date  end){
         start = getStartTime(start);

@@ -54,6 +54,9 @@ public class ContractDto implements Serializable {
     private String reviewIds;
     private String reviewIdList;
     private List<ContractFoceDto> contractFoceDtos;
+    private double hasPayAmount;
+    private Date lastPayTime;
+    private String actorName;
 
     public enum ContractTypeEnums {
         UNCHECKED(0, "不需要审核"),

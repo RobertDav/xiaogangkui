@@ -15,5 +15,54 @@
     <select id="loadByUserId" parameterType="map" resultType="com.xiaogangkui.dto.CommonDto">
         SELECT * from t_user WHERE  id = #{id}
     </select>
+    
+    <select id="bidTotal" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT sum(bail) as bail,count(1) as bidCount from t_invest WHERE  customerId = #{customerId} and isDeleted = 0;
+    </select>
+    <select id="bidTotalByTime" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT sum(bail) as partBail ,sum(biAmount) as partBiAmount
+        ,sum(rebackTotalAmount) as partBackBail from t_invest WHERE  customerId = #{customerId} and isDeleted = 0
+        and createTime between #{startTime} and #{endTime}
+    </select>
+    <select id="bidCountByTime" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT count(1) as partCount from t_invest WHERE  customerId = #{customerId} and isDeleted = 0
+        and createTime between #{startTime} and #{endTime}
+        <if test="status != null and  status != 0">
+          and status == #{status}
+        </if>
+    </select>
 
+    <select id="contractTotal" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT count(1) as contractTotal from t_contract WHERE  customerId = #{customerId} and isDeleted = 0
+        <if test="startTime != null">
+            and  createTime >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and  #{endTime} >= createTime
+        </if>
+    </select>
+
+    <select id="contractTotalByTime" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT count(1) as partContractTotal,sum(totalAmount) as totalAmount from t_contract
+        WHERE  customerId = #{customerId} and isDeleted = 0
+        and financeType = #{financeType}
+        <if test="startTime != null">
+            and  createTime >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and  #{endTime} >= createTime
+        </if>
+    </select>
+
+    <select id="contractRecordCountByTime" parameterType="map" resultType="com.xiaogangkui.dto.ReportDto">
+        SELECT sum(payAmount) as payAmount  from ts_contract_record
+        WHERE  customerId = #{customerId} and isDeleted = 0
+        and payType = #{payType}
+        <if test="startTime != null">
+            and  payTime >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and  #{endTime} >= payTime
+        </if>
+    </select>
 </mapper>
