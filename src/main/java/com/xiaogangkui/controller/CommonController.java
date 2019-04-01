@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.xiaogangkui.dto.ResultMap.ERROR_CODE;
 import static com.xiaogangkui.dto.ResultMap.SUCCESS_CODE;
@@ -86,29 +87,32 @@ public class CommonController {
         fuzzySearchDto.setStartTime(null);
         fuzzySearchDto.setEndTime(null);
         ReportDto reportDto1 = commonDao.contractTotal(fuzzySearchDto);
-        reportDto.setContractMonthAdd(reportDto1.getContractTotal());
-        return ResultMap.generate(SUCCESS_CODE,"",reportDto);
+        reportDto1.setContractMonthAdd(reportDto.getContractTotal());
+        return ResultMap.generate(SUCCESS_CODE,"",reportDto1);
     }
 
     @RequestMapping(value = "/contractTotalByTime",method = RequestMethod.POST)
     public ResultMap contractTotalByTime(@RequestBody FuzzySearchDto fuzzySearchDto){
         fuzzySearchDto.setFinanceType(1);
-        ReportDto reportDto = commonDao.contractTotalByTime(fuzzySearchDto);
-        reportDto.setPartCollectContractTotal(reportDto.getPartContractTotal());
-        reportDto.setPartCollectAmount(reportDto.getPartAmount());
+        ReportDto reportDto = ReportDto.builder().build();
+        reportDto = commonDao.contractTotalByTime(fuzzySearchDto);
+        if(Objects.nonNull(reportDto)){
+            reportDto.setPartCollectContractTotal(reportDto.getPartContractTotal());
+            reportDto.setPartCollectAmount(reportDto.getPartAmount());
+        }
         fuzzySearchDto.setFinanceType(2);
-
         ReportDto reportDto1 = commonDao.contractTotalByTime(fuzzySearchDto);
-        reportDto.setPartPayContractTotal(reportDto1.getPartContractTotal());
-        reportDto.setPartPayAmount(reportDto1.getPartAmount());
-
+        if(Objects.nonNull(reportDto1)){
+            reportDto.setPartPayContractTotal(reportDto1.getPartContractTotal());
+            reportDto.setPartPayAmount(reportDto1.getPartAmount());
+        }
         fuzzySearchDto.setPayType(1);
         ReportDto reportDto2 = commonDao.contractRecordCountByTime(fuzzySearchDto);
-        reportDto.setPartPayRecordAmount(reportDto2.getPayAmount());
+        reportDto.setPartPayRecordAmount(Objects.nonNull(reportDto2)?reportDto2.getPayAmount():0.0);
 
         fuzzySearchDto.setPayType(2);
         ReportDto reportDto3 = commonDao.contractRecordCountByTime(fuzzySearchDto);
-        reportDto.setPartCollectRecordAmount(reportDto3.getPayAmount());
+        reportDto.setPartCollectRecordAmount(Objects.nonNull(reportDto3)?reportDto3.getPayAmount():0.0);
         return ResultMap.generate(SUCCESS_CODE,"",reportDto);
     }
 
