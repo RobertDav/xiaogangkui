@@ -21,7 +21,6 @@ public class ImageController {
     private ImageService imageService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
     public ResultMap upload(@RequestParam("file") MultipartFile file) {
         ImagePathDto imagePathDto = getImagePathDto(file);
 
