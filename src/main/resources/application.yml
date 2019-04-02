@@ -20,7 +20,6 @@ management:
   server:
     port: 9999
   security:
-    enabled: false
     user:
       name: actuator
       password: actuator
