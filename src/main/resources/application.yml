@@ -39,7 +39,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://192.168.102.217:3306/cantaloupe?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&allowNativePasswords=true
+    url: jdbc:mysql://192.168.102.217:3306/wxadmin?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&allowNativePasswords=true
     username: root
     password: Welcome@456
     driver-class-name: com.mysql.cj.jdbc.Driver
