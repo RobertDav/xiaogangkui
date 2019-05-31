@@ -7,6 +7,7 @@ import com.xiaogangkui.service.CompanyService;
 import com.xiaogangkui.util.common.BeanMapperUtil;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author Created by luchunyu
  */
 @Component
+@EnableAspectJAutoProxy
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
