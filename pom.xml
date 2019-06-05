@@ -200,6 +200,13 @@
             <artifactId>core</artifactId>
             <version>3.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>taobao-jar</groupId>
+            <artifactId>taobao-jar</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/taobao-sdk-java-auto_1559652882149-20190604.jar</systemPath>
+        </dependency>
         <!--&lt;!&ndash; thymeleaf模板引擎 &ndash;&gt;-->
         <!--<dependency>-->
         <!--<groupId>org.springframework.boot</groupId>-->
