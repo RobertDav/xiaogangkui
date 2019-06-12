@@ -207,6 +207,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/taobao-sdk-java-auto_1559652882149-20190604.jar</systemPath>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mitre.dsmiley.httpproxy/smiley-http-proxy-servlet -->
+        <dependency>
+            <groupId>org.mitre.dsmiley.httpproxy</groupId>
+            <artifactId>smiley-http-proxy-servlet</artifactId>
+            <version>1.11</version>
+        </dependency>
+
         <!--&lt;!&ndash; thymeleaf模板引擎 &ndash;&gt;-->
         <!--<dependency>-->
         <!--<groupId>org.springframework.boot</groupId>-->

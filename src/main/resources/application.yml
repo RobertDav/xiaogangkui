@@ -112,3 +112,8 @@ spring:
 #    sentinel:
 #      master: master8026
 #      nodes: 10.189.80.25:26379,10.189.80.26:26379,10.189.80.27:26378
+
+servlet:
+  proxy:
+    servlet_url: /solr/*
+    target_url: https://www.baidu.com
