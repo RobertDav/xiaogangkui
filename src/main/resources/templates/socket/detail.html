@@ -1,49 +1,60 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>list.html</title>
+    <meta charset="UTF-8"/>
+    <title>广播式WebSocket</title>
+    <script th:src="@{js/sockjs.min.js}"></script>
+    <script th:src="@{js/stomp.js}"></script>
+    <script th:src="@{js/jquery-3.1.1.js}"></script>
 </head>
-<body>
-<h2>用户列表</h2>
+<body "disconnect()">
+<noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <div>
-    <ul>
-        <p>ID:<span th:text="${cid}"></span></p>
-    </ul>
+    <div>
+        <button id="connect" "connect();">连接</button>
+        <button id="disconnect" disabled="disabled" "disconnect();">断开连接</button>
+    </div>
+
+    <div id="conversationDiv">
+        <label>输入你的名字</label><input type="text" id="name"/>
+        <button id="sendName" "sendName();">发送</button>
+        <p id="response"></p>
+    </div>
 </div>
-<script>
-    var socket;
-    if(typeof(WebSocket) == "undefined") {
-        console.log("您的浏览器不支持WebSocket");
-    }else{
-        console.log("您的浏览器支持WebSocket");
-        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-        //等同于socket = new WebSocket("ws://localhost:8083/checkcentersys/websocket/20");
-        socket = new WebSocket("${basePath}websocket/${cid}".replace("http","ws"));
-        //打开事件
-        socket.onopen = function() {
-            console.log("Socket 已打开");
-            //socket.send("这是来自客户端的消息" + location.href + new Date());
-        };
-        //获得消息事件
-        socket.onmessage = function(msg) {
-            console.log(msg.data);
-            //发现消息进入    开始处理前端触发逻辑
-        };
-        //关闭事件
-        socket.onclose = function() {
-            console.log("Socket已关闭");
-        };
-        //发生了错误事件
-        socket.onerror = function() {
-            alert("Socket发生了错误");
-            //此时可以尝试刷新页面
+<script type="text/javascript">
+    var stompClient = null;
+    function setConnected(connected) {
+        document.getElementById("connect").disabled = connected;
+        document.getElementById("disconnect").disabled = !connected;
+        document.getElementById("conversationDiv").style.visibility = connected ? 'visible' : 'hidden';
+//        $("#connect").disabled = connected;
+//        $("#disconnect").disabled = !connected;
+        $("#response").html();
+    }
+    function connect() {
+        var socket = new SockJS('/endpointSang');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected:' + frame);
+            stompClient.subscribe('/topic/getResponse', function (response) {
+                showResponse(JSON.parse(response.body).responseMessage);
+            })
+        });
+    }
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
         }
-        //离开页面时，关闭socket
-        //jquery1.8中已经被废弃，3.0中已经移除
-        // $(window).unload(function(){
-        //     socket.close();
-        //});
+        setConnected(false);
+        console.log('Disconnected');
+    }
+    function sendName() {
+        var name = $('#name').val();
+        console.log('name:' + name);
+        stompClient.send("/welcome", {}, JSON.stringify({'name': name}));
+    }
+    function showResponse(message) {
+        $("#response").html(message);
     }
 </script>
 </body>

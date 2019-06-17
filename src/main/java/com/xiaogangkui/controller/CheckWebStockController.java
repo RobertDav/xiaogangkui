@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
@@ -16,9 +17,10 @@ import java.io.IOException;
 public class CheckWebStockController {
     //页面请求
     @GetMapping("/socket/{cid}")
-    public ModelAndView socket(@PathVariable String cid) {
+    public ModelAndView socket(@PathVariable String cid, HttpServletRequest servletRequest) {
         ModelAndView mav=new ModelAndView("/socket/detail");
         mav.addObject("cid", cid);
+        mav.addObject("basePath","http://localhost:8888/checkcenter");
         return mav;
     }
     //推送数据接口
