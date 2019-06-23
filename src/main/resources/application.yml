@@ -34,6 +34,11 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   typeHandlersPackage: com.xiaogangkui.dao
 
+rocketmq:
+  name-server: 192.168.102.211:9876;192.168.102.214:9876;
+  producer:
+    send-message-timeout: 300000
+    group: my-group
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
