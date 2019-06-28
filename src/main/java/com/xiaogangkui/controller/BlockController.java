@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.concurrent.Callable;
 
@@ -18,6 +19,8 @@ public class BlockController {
 
     @Autowired
     private TaskService taskService;
+
+    private  DeferredResult<String> deferredResult = new DeferredResult<>();
 
     @RequestMapping(value = "/getResult", method = RequestMethod.GET)
     public ResponseMsg<String> getResult() {
@@ -37,4 +40,15 @@ public class BlockController {
         log.info("接收任务线程完成并退出"+result);
         return result.call();
     }
+
+    @RequestMapping("/testDeferredResult")
+    public DeferredResult<String> testDeferredResult() {
+        return deferredResult;
+    }
+    @RequestMapping("/setDeferredResult")
+    public String setDeferredResult() {
+        deferredResult.setResult("Test result!");
+        return "succeed";
+    }
+
 }
