@@ -34,6 +34,11 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   typeHandlersPackage: com.xiaogangkui.dao
 
+rocketmq:
+  name-server: 192.168.102.211:9876;192.168.102.214:9876;
+  producer:
+    send-message-timeout: 300000
+    group: my-group
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -75,18 +80,18 @@ spring:
           result-set-open-after-log-enabled: false
           result-set-close-after-log-enabled: false
 
-#  thymeleaf:
-#    prefix: classpath:templates/
-#    suffix: .html
-#    mode: HTML5
-#    encoding: UTF-8
-#    content: type=text/html
-#    cache: false
-#    chain:
-#      strategy:
-#        content:
-#          enabled: true
-#          paths: /**
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content: type=text/html
+    cache: false
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
   redis:
     host: 192.168.99.100
     password:

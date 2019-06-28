@@ -1,0 +1,22 @@
+package com.xiaogangkui.controller;
+
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/testRocketMq")
+public class TestRocketMqController {
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @GetMapping("/sendMessage")
+    public String sendMessage()  {
+        rocketMQTemplate.convertAndSend("test-topic","hello world");
+        return "success";
+
+    }
+}
