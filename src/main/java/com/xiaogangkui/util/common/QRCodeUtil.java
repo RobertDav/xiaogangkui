@@ -1,5 +1,6 @@
 package com.xiaogangkui.util.common;
 
+import com.github.pagehelper.util.StringUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -7,7 +8,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.mysql.cj.util.StringUtils;
-import com.sun.deploy.net.URLEncoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,9 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -32,134 +35,15 @@ public class QRCodeUtil {
     private static final int WIDTH = 60;
     // LOGO高度
     private static final int HEIGHT = 60;
-
-    private static BufferedImage createImage(String content, String imgPath,
-                                             boolean needCompress) throws Exception {
-        Hashtable hints = new Hashtable();
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
-        hints.put(EncodeHintType.MARGIN, 1);
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(content,
-                BarcodeFormat.QR_CODE, QRCODE_SIZE, QRCODE_SIZE, hints);
-        int width = bitMatrix.getWidth();
-        int height = bitMatrix.getHeight();
-        BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000
-                        : 0xFFFFFFFF);
-            }
-        }
-        if (imgPath == null || "".equals(imgPath)) {
-            return image;
-        }
-        // 插入图片
-        QRCodeUtil.insertImage(image, imgPath, needCompress);
-        return image;
-    }
-
-
-    private static void insertImage(BufferedImage source, String imgPath,
-                                    boolean needCompress) throws Exception {
-        File file = new File(imgPath);
-        if (!file.exists()) {
-            System.err.println("" + imgPath + "   该文件不存在！");
-            return;
-        }
-        Image src = ImageIO.read(new File(imgPath));
-        int width = src.getWidth(null);
-        int height = src.getHeight(null);
-        if (needCompress) { // 压缩LOGO
-            if (width > WIDTH) {
-                width = WIDTH;
-            }
-            if (height > HEIGHT) {
-                height = HEIGHT;
-            }
-            Image image = src.getScaledInstance(width, height,
-                    Image.SCALE_SMOOTH);
-            BufferedImage tag = new BufferedImage(width, height,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics g = tag.getGraphics();
-            g.drawImage(image, 0, 0, null); // 绘制缩小后的图
-            g.dispose();
-            src = image;
-        }
-        // 插入LOGO
-        Graphics2D graph = source.createGraphics();
-        int x = (QRCODE_SIZE - width) / 2;
-        int y = (QRCODE_SIZE - height) / 2;
-        graph.drawImage(src, x, y, width, height, null);
-        Shape shape = new RoundRectangle2D.Float(x, y, width, width, 6, 6);
-        graph.setStroke(new BasicStroke(3f));
-        graph.draw(shape);
-        graph.dispose();
-    }
-
-    public static void mkdirs(String destPath) {
-        File file = new File(destPath);
-        //当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
-        if (!file.exists() && !file.isDirectory()) {
-            file.mkdirs();
-        }
-    }
+    private static final int BLACK = 0xFF000000;
+    private static final int WHITE = 0xFFFFFFFF;
 
     /**
-     * map 的key为url value为名称
-     *
+     * map key 为 url value 为图片名称
      * @param map
-     * @param path
-     * @return
+     * @param response
      */
-    public static String createQrCode(Map<String, String> map, String path) {
-        if (StringUtils.isNullOrEmpty(path)) path = "/data/qrcode";
-        if (Objects.isNull(map)) return path;
-        try {
-            Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> next = iterator.next();
-                Map<EncodeHintType, String> hints = new HashMap<>();
-                hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-                BitMatrix bitMatrix = new MultiFormatWriter().encode(next.getKey(), BarcodeFormat.QR_CODE, 400, 400, hints);
-                String fileName = next.getValue();
-                String format = "jpg";
-                if (fileName.indexOf(".png") == -1 && fileName.indexOf(".jpg") == -1 && fileName.indexOf(".jpeg") == -1) {
-                    fileName = fileName + ".jpg";
-                } else {
-                    format = fileName.substring(fileName.indexOf(".") + 1);
-                }
-                File file = new File(path, fileName);
-                if (file.exists() || ((file.getParentFile().exists() || file.getParentFile().mkdirs()) && file.createNewFile())) {
-                    writeToFile(bitMatrix, format, file);
-                }
-            }
-            //生成压缩包
-            FileOutputStream fileOutputStream = new FileOutputStream(new File("C:\\Users\\abc\\Desktop\\download.zip"));
-            toZip(path, fileOutputStream, true);
-            System.out.println("success");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return path;
-    }
-
-    public static void getBarCodeImgByUrl(String url, OutputStream os) throws WriterException, IOException {
-        //二维码参数
-        int width = 200; // 图像宽度
-        int height = 200; // 图像高度
-        String format = "png";// 图像类型
-        Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
-        hints.put(EncodeHintType.MARGIN, 1);
-        BitMatrix bitMatrix;
-        bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
-        writeToStream(bitMatrix, format, os);
-    }
-
-
-    public static void download(Map<String, String> map,HttpServletResponse response) {
+    public static void urlToqrcodeZip(Map<String, String> map, HttpServletResponse response) {
         //通过活动标识和商户id查询活动
         ZipOutputStream zos = null;
         try {
@@ -170,16 +54,25 @@ public class QRCodeUtil {
             Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
             while (iterator.hasNext()){
                 Map.Entry<String, String> next = iterator.next();
-                zos.putNextEntry(new ZipEntry( next.getValue()+ ".png"));//命名
-                getBarCodeImgByUrl(next.getKey(), zos);//拼接了url
+                String name =  StringUtil.isNotEmpty(next.getValue())?next.getValue():String.valueOf(System.currentTimeMillis());
+                zos.putNextEntry(new ZipEntry(  name+ ".png"));//命名
+                URL url = new URL(next.getKey());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();//利用HttpURLConnection对象,我们可以从网络中获取网页数据.
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream in = conn.getInputStream();
+                BufferedImage bi = ImageIO.read(in);
+                bi = addNameToImage(next.getValue(), bi);
+                String format = "png";
+                if (!ImageIO.write(bi, format, zos)) {
+                    throw new IOException("Could not write an image of format " + format);
+                }
             }
             zos.flush();
             zos.close();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WriterException e) {
             e.printStackTrace();
         } finally {
             if (zos != null) {
@@ -193,86 +86,28 @@ public class QRCodeUtil {
         }
     }
 
-    public static void toZip(String srcDir, OutputStream out, boolean KeepDirStructure)
-            throws RuntimeException {
 
-        long start = System.currentTimeMillis();
-        ZipOutputStream zos = null;
-        try {
-            zos = new ZipOutputStream(out);
-            File sourceFile = new File(srcDir);
-            compress(sourceFile, zos, sourceFile.getName(), KeepDirStructure);
-            long end = System.currentTimeMillis();
-            System.out.println("压缩完成，耗时：" + (end - start) + " ms");
-        } catch (Exception e) {
-            throw new RuntimeException("zip error from ZipUtils", e);
-        } finally {
-            if (zos != null) {
-                try {
-                    zos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public static void getBarCodeImgByUrl(String url, OutputStream os,String productName) throws WriterException, IOException {
+        //二维码参数
+        int width = 400; // 图像宽度
+        int height = 400; // 图像高度
+        String format = "png";// 图像类型
+        Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
+        hints.put(EncodeHintType.MARGIN, 1);
+        BitMatrix bitMatrix;
+        bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
+        writeToStream(bitMatrix, format, os,productName);
     }
-
-    private static void compress(File sourceFile, ZipOutputStream zos, String name,
-                                 boolean KeepDirStructure) throws Exception {
-        byte[] buf = new byte[BUFFER_SIZE];
-        if (sourceFile.isFile()) {
-            // 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字
-            zos.putNextEntry(new ZipEntry(name));
-            // copy文件到zip输出流中
-            int len;
-            FileInputStream in = new FileInputStream(sourceFile);
-            while ((len = in.read(buf)) != -1) {
-                zos.write(buf, 0, len);
-            }
-            // Complete the entry
-            zos.closeEntry();
-            in.close();
-        } else {
-            File[] listFiles = sourceFile.listFiles();
-            if (listFiles == null || listFiles.length == 0) {
-                // 需要保留原来的文件结构时,需要对空文件夹进行处理
-                if (KeepDirStructure) {
-                    // 空文件夹的处理
-                    zos.putNextEntry(new ZipEntry(name + "/"));
-                    // 没有文件，不需要文件的copy
-                    zos.closeEntry();
-                }
-            } else {
-                for (File file : listFiles) {
-                    // 判断是否需要保留原来的文件结构
-                    if (KeepDirStructure) {
-                        // 注意：file.getName()前面需要带上父文件夹的名字加一斜杠,
-                        // 不然最后压缩包中就不能保留原来的文件结构,即：所有文件都跑到压缩包根目录下了
-                        compress(file, zos, name + "/" + file.getName(), KeepDirStructure);
-                    } else {
-                        compress(file, zos, file.getName(), KeepDirStructure);
-                    }
-                }
-            }
-        }
-    }
-
-    static void writeToFile(BitMatrix matrix, String format, File file) throws IOException {
+    static void writeToStream(BitMatrix matrix, String format, OutputStream stream,String productName) throws IOException {
         BufferedImage image = toBufferedImage(matrix);
-        if (!ImageIO.write(image, format, file)) {
-            throw new IOException("Could not write an image of format " + format + " to " + file);
-        }
-    }
-
-    static void writeToStream(BitMatrix matrix, String format, OutputStream stream) throws IOException {
-        BufferedImage image = toBufferedImage(matrix);
+        image =  addNameToImage(productName,image);
         if (!ImageIO.write(image, format, stream)) {
             throw new IOException("Could not write an image of format " + format);
         }
     }
 
-    private static final int BLACK = 0xFF000000;
-    private static final int WHITE = 0xFFFFFFFF;
 
     private static BufferedImage toBufferedImage(BitMatrix matrix) {
         int width = matrix.getWidth();
@@ -284,6 +119,46 @@ public class QRCodeUtil {
             }
         }
         return image;
+    }
+
+    public static BufferedImage addNameToImage(String productName,BufferedImage image){
+        if (productName != null && !productName.equals("")) {
+            //新的图片，把带logo的二维码下面加上文字
+            BufferedImage outImage = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D outg = outImage.createGraphics();
+            //画二维码到新的面板
+            outg.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+            //画文字到新的面板
+            outg.setColor(Color.BLACK);
+            outg.setFont(new Font("宋体",Font.BOLD,30)); //字体、字型、字号
+            int strWidth = outg.getFontMetrics().stringWidth(productName);
+            if (strWidth > 499) {
+// //长度过长就截取前面部分
+// outg.drawString(productName, 0, image.getHeight() + (outImage.getHeight() - image.getHeight())/2 + 5 ); //画文字
+                //长度过长就换行
+                String productName1 = productName.substring(0, productName.length()/2);
+                String productName2 = productName.substring(productName.length()/2, productName.length());
+                int strWidth1 = outg.getFontMetrics().stringWidth(productName1);
+                int strWidth2 = outg.getFontMetrics().stringWidth(productName2);
+                outg.drawString(productName1, 220  - strWidth1/2, image.getHeight() + (outImage.getHeight() - image.getHeight())/2 + 12 );
+                BufferedImage outImage2 = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
+                Graphics2D outg2 = outImage2.createGraphics();
+                outg2.drawImage(outImage, 0, 0, outImage.getWidth(), outImage.getHeight(), null);
+                outg2.setColor(Color.BLACK);
+                outg2.setFont(new Font("宋体",Font.BOLD,30)); //字体、字型、字号
+                outg2.drawString(productName2, 220  - strWidth2/2, outImage.getHeight() + (outImage2.getHeight() - outImage.getHeight())/2 + 5 );
+                outg2.dispose();
+                outImage2.flush();
+                outImage = outImage2;
+            }else {
+                outg.drawString(productName, 220  - strWidth/2 , image.getHeight() + (outImage.getHeight() - image.getHeight())/2 + 12 ); //画文字
+            }
+            outg.dispose();
+            outImage.flush();
+            image = outImage;
+        }
+        return image;
+
     }
 
 }
