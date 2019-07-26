@@ -110,7 +110,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             if(CollectionUtils.isNotEmpty(leaveRecordDtos)){
                 Map<Integer, List<LeaveRecordDto>> leaveCollect = leaveRecordDtos.stream().collect(Collectors.groupingBy(LeaveRecordDto::getApplyerId));
                 leaveCount = leaveCollect.keySet().size();
-                List<UserDto> leaveList = users.stream().filter(c -> !leaveCollect.keySet().contains(c.getId())).map(c ->
+                List<UserDto> leaveList = users.stream().filter(c -> leaveCollect.keySet().contains(c.getId())).map(c ->
                         UserDto.builder().id(c.getId()).name(c.getName()).build()
                 ).collect(Collectors.toList());
                 returnReportDto.setLeaveList(leaveList);
