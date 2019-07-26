@@ -28,7 +28,7 @@
         SELECT count(1) as partCount from t_invest WHERE  customerId = #{customerId} and isDeleted = 0
         and createTime between #{startTime} and #{endTime}
         <if test="status != null and  status != 0">
-          and status == #{status}
+          and status = #{status}
         </if>
     </select>
 
